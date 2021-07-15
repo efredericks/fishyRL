@@ -1,0 +1,93 @@
+<!-- 
+  * Based on the Broughlike tutorial: https://nluqo.github.io/broughlike-tutorial/
+  * Assets: kenney.nl: https://www.kenney.nl/assets/micro-roguelike
+  * Sounds:
+    * 8-bitmusicandsfx (coin)
+  
+-->
+<html>
+
+<head>
+  <script src="game.js"></script>
+  <script src="map.js"></script>
+  <script src="tile.js"></script>
+  <script src="monster.js"></script>
+  <script src="util.js"></script>
+  <script src="spell.js"></script>
+
+  <style>
+    canvas {
+      background: #222323;
+      /* background: #472D3C; */
+    }
+  </style>
+</head>
+
+<body>
+  <canvas></canvas>
+</body>
+<script>
+  tileSize = 64;
+  numTiles = 9;
+  uiWidth = 4;
+  level = 1;
+  numLevels = 6;
+  maxHP = 6;
+  startingHP = 3;
+
+  shakeAmount = 0;
+  shakeX = 0;
+  shakeY = 0;
+
+  spritesheet = new Image();
+  spritesheet.src = "kenney-microroguelike/Tilemap/colored_tilemap_packed.png"
+  spritesheet.onload = showTitle;
+  // spritesheet.src = 'colored_transparent_packed.png';
+
+  gameState = "loading";
+
+  let MOVE_KEYS = {
+    'left': ["a", "h"],
+    'right': ["d", "l"],
+    "up": ["w", "k"],
+    "down": ["s", "j"],
+
+    "upleft": ["y"],
+    "upright": ["u"],
+    "downleft": ["b"],
+    "downright": ["n"],
+  };
+
+  document.querySelector("html").onkeypress = function (e) {
+    if (gameState == "title")
+      startGame();
+    else if (gameState == "dead")
+      showTitle();
+    else if (gameState == "running") {
+      if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
+      if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
+      if (MOVE_KEYS.left.indexOf(e.key) >= 0) player.tryMove(-1, 0);
+      if (MOVE_KEYS.right.indexOf(e.key) >= 0) player.tryMove(1, 0);
+
+      // diags
+      if (MOVE_KEYS.upright.indexOf(e.key) >= 0) player.tryMove(1, -1);
+      if (MOVE_KEYS.upleft.indexOf(e.key) >= 0) player.tryMove(-1, -1);
+      if (MOVE_KEYS.downleft.indexOf(e.key) >= 0) player.tryMove(-1, 1);
+      if (MOVE_KEYS.downright.indexOf(e.key) >= 0) player.tryMove(1, 1);
+
+      // unsurprisingly, wait
+      if (e.key == ".") player.wait();
+
+      // spells
+      if (e.key >= 1 && e.key <= 9)
+        player.castSpell(e.key-1);
+
+    }
+  };
+
+  setInterval(draw, 15);
+  setupCanvas();
+  initSounds();
+</script>
+
+</html>
