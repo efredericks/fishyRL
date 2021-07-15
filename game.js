@@ -67,7 +67,7 @@ function screenshake() {
 }
 
 function draw() {
-  if (gameState == "running") {
+  if (gameState == "running" || gameState == "dead") {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     screenshake();
