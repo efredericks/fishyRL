@@ -23,17 +23,38 @@ todo:
   <script src="spell.js"></script>
 
   <style>
+    * {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    body{ 
+      background: #222323;
+    }
+
     canvas {
       background: #222323;
+      border: 1px solid #ccc;
+      border-radius: 25px;
       /* background: #472D3C; */
+    }
+
+    #main {
+      margin: 50px auto;
+      width: 832px;
+      height: 576px;
     }
   </style>
 </head>
 
 <body>
-  <canvas></canvas>
+  <div id="main">
+    <canvas></canvas>
+  </div>
 </body>
 <script>
+  // canvas.width = tileSize * (numTiles + uiWidth);
+  // canvas.height = tileSize * numTiles;
   tileSize = 64;
   numTiles = 9;
   uiWidth = 4;
@@ -87,7 +108,7 @@ todo:
 
       // spells
       if (e.key >= 1 && e.key <= 9)
-        player.castSpell(e.key-1);
+        player.castSpell(e.key - 1);
 
     }
   };
