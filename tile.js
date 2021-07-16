@@ -50,6 +50,8 @@ class Tile {
 
     if (this.treasure)
       drawSprite('coin', this.x, this.y);
+    else if (this.ring)
+      drawSprite('ring', this.x, this.y);
 
     if (this.effectCounter) {
       this.effectCounter--;
@@ -82,6 +84,13 @@ class Floor extends Tile {
       playSound("treasure");
       this.treasure = false;
       spawnMonster();
+    } else if (monster.isPlayer && this.ring) {
+      playSound("ring");
+      this.ring = false;
+      score += 100;
+
+      addScore(score, true);
+      showTitle();
     }
   }
 }

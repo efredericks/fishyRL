@@ -172,6 +172,7 @@ class Player extends Monster {
   }
 
   wait() {
+    this.heal(0.5);
     tick();
   }
 

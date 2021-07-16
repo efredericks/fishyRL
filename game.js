@@ -11,6 +11,7 @@ spriteLookup = {
   'tp': { x: 1, y: 8 },
   'stairsDown': { x: 4, y: 3 },
   'coin': { x: 8, y: 5 },
+  'ring': { x: 9, y: 5 },
   'heal': { x: 4, y: 8 },
   'explosion': { x: 3, y: 8 },
   'zap': { x: 2, y: 8 },
@@ -32,6 +33,7 @@ function initSounds() {
     hit1: new Audio('sounds/SFX_-_hit_basic_03.ogg'),
     hit2: new Audio('sounds/SFX_-_hit_basic_05.ogg'),
     treasure: new Audio('sounds/SFX_-_coin_01.ogg'),
+    ring: new Audio('sounds/SFX_-_coins_multiple_04.ogg'),
     newLevel: new Audio('sounds/SFX_-_positive_01.ogg'),
     spell: new Audio('sounds/SFX_-_magic_spell_01.ogg'),
   };
@@ -123,7 +125,7 @@ function showTitle() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   gameState = "title";
 
-  drawText("fishyRL", 40, true, canvas.height / 2, "white");
+  drawText("><~=fishyRL=>", 40, true, canvas.height / 2 - 40, "white");
 
   drawScores();
 }
