@@ -28,11 +28,12 @@ todo:
       margin: 0px;
     }
 
-    body{ 
+    body {
       background: #121313;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0px;
       padding: 0px;
       height: 100%;
@@ -77,9 +78,10 @@ todo:
   numTiles = 9;
   uiWidth = 4;
   level = 1;
+  upLevel = 6;
   numLevels = 6;
   maxHP = 6;
-  startingHP = 3;
+  startingHP = 100;//3;
 
   shakeAmount = 0;
   shakeX = 0;
@@ -109,6 +111,10 @@ todo:
       startGame();
     else if (gameState == STATES.dead)
       showTitle();
+    else if (gameState == STATES.dialogue) 
+      gameState = STATES.running;
+    else if (gameState == STATES.win)
+      startGame();
     else if (gameState == STATES.running) {
       if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
       if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
@@ -128,12 +134,13 @@ todo:
       if (e.key >= 1 && e.key <= 9)
         player.castSpell(e.key - 1);
 
+      // DEBUG
       if (e.key == "F") {
         gameState = STATES.dialogue;
         showDialogue("TEST", "I am a test");
       }
-    } else if (gameState == STATES.dialogue) {
-      gameState = STATES.running;
+      if (e.key == "E")
+        player.hp = player.maxHP;
     }
   };
 

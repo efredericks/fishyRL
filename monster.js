@@ -90,6 +90,7 @@ class Monster {
         if (this.isPlayer != newTile.monster.isPlayer) {
           this.attackedThisTurn = true;
           newTile.monster.stunned = true;
+
           newTile.monster.hit(1 + this.bonusAttack);
 
           shakeAmount = 5;
@@ -149,11 +150,12 @@ class Monster {
 }
 
 class Player extends Monster {
-  constructor(tile) {
-    super(tile, 'pc', 3);
+  constructor(tile, ring) {
+    super(tile, 'pc', 100);//3);
     this.isPlayer = true;
     this.teleportCounter = 0;
     this.spells = shuffle(Object.keys(spells)).splice(0, numSpells);
+    this.ring = ring;
   }
 
   update() {
@@ -163,6 +165,10 @@ class Player extends Monster {
   addSpell() {
     let newSpell = shuffle(Object.keys(spells))[0];
     this.spells.push(newSpell);
+  }
+
+  castRing() {
+
   }
 
   castSpell(index) {

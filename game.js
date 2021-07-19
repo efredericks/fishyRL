@@ -10,6 +10,7 @@ spriteLookup = {
   'dead': { x: 9, y: 7 },
   'tp': { x: 1, y: 8 },
   'stairsDown': { x: 4, y: 3 },
+  'stairsUp': { x: 5, y: 3 },
   'coin': { x: 8, y: 5 },
   'ring': { x: 9, y: 5 },
   'heal': { x: 4, y: 8 },
@@ -69,7 +70,7 @@ function screenshake() {
 }
 
 function draw() {
-  if (gameState == STATES.running || gameState == STATES.dead) {
+  if (gameState == STATES.running || gameState == STATES.dead || gameState == STATES.dialogue) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     screenshake();
@@ -86,17 +87,29 @@ function draw() {
 
     player.draw();
 
-    drawText("Level: " + level, 30, false, 40, "#ccc");
+    if (player.ring)
+      drawText("Level: " + upLevel, 30, false, 40, "#ccc");
+    else
+      drawText("Level: " + level, 30, false, 40, "#ccc");
+
     drawText("Score: " + score, 30, false, 70, "#ccc");
 
     for (let i = 0; i < player.spells.length; i++) {
       let spellText = (i + 1) + ") " + (player.spells[i] || "");
       drawText(spellText, 20, false, 110 + i * 40, "aqua");
     }
+
+    if (gameState == STATES.dialogue) {
+      if (player.ring)
+        showRingMessage();
+      else
+        showDialogue("TEST", "I am a test");
+    }
   }
 }
 
 function tick() {
+  // console.log(player.ring);
   for (let k = monsters.length - 1; k >= 0; k--) {
     if (!monsters[k].dead) {
       monsters[k].update();
@@ -110,6 +123,7 @@ function tick() {
   if (player.dead) {
     addScore(score, false);
     gameState = STATES.dead;
+    player.ring = false;
   }
 
   // spawnCounter--;
@@ -120,10 +134,27 @@ function tick() {
   // }
 }
 
+// abstract this to accept a paragraph
+function showWin() {
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let msg = ["You escaped with the Ring of Crendor!", "You use it to buy a dented lute."];
+  drawText(msg[0], 24, true, 100, "white");
+  drawText(msg[1], 24, true, 140, "white");
+}
+function showRingMessage() {
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let msg = ["You got the Ring of Crendor!", "Now bring it back to the Pawn Shop of Necromatic Intent!"];
+  drawText(msg[0], 24, true, 100, "white");
+  drawText(msg[1], 24, true, 140, "white");
+}
 function showDialogue(title, message) {
   ctx.fillStyle = 'rgba(0,0,0,0.75)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  gameState = STATES.title;
+  // gameState = STATES.title;
 
   drawText(title, 24, true, canvas.height / 2 - 60, "white");
   drawText(message, 18, true, canvas.height / 2 - 40, "white");
@@ -136,11 +167,6 @@ function showTitle() {
   drawText('><~=fishyRL=>', 40, true, 60, "white");
   if (gameState == STATES.dead) {
     drawText("You died again you ponce.", 24, true, 100, "white");
-  } else if (gameState == STATES.win) {
-    let msg = ["You got the Ring of Crendor!", "Now bring it back to the Pawn Shop of Necromatic Intent!"];
-    drawText(msg[0], 24, true, 100, "white");
-    drawText(msg[1], 24, true, 140, "white");
-
   } else {
     let msg = ["Go forth and find the infamous Ring of Crendor!", "It's sparkly majesty calls to the deep depths", "of your cold, dead heart,", "yearning to be pawned for a fiver"];
     drawText(msg[0], 24, true, 100, "white");
@@ -165,7 +191,11 @@ function startLevel(playerHP, playerSpells) {
   spawnRate = 15;
   spawnCounter = spawnRate;
   generateLevel();
-  player = new Player(randomPassableTile());
+
+  let ring = false;
+  if (typeof player != "undefined")
+    ring = player.ring;
+  player = new Player(randomPassableTile(), ring);
   player.hp = playerHP;
   player.maxHP = player.hp;
 

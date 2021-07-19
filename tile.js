@@ -89,9 +89,14 @@ class Floor extends Tile {
       this.ring = false;
       score += 100;
 
-      gameState = STATES.win;
-      addScore(score, true);
-      showTitle();
+      gameState = STATES.dialogue;
+      player.ring = true;
+      // showDialogue("RING", "GO UP NOW");
+      showRingMessage();
+      addScore(100, true);
+      // showTitle();
+
+      randomPassableTile().replace(Exit);
     }
   }
 }
@@ -104,18 +109,31 @@ class Wall extends Tile {
 
 class Exit extends Tile {
   constructor(x, y) {
-    super(x, y, 'stairsDown', true);
+    player.exitPosition = {x: x, y: y};
+
+    if (player.ring)
+      super(x, y, 'stairsUp', true);
+    else
+      super(x, y, 'stairsDown', true);
   }
 
   stepOn(monster) {
     if (monster.isPlayer) {
       playSound("newLevel");
-      if (level == numLevels) {
+      if (level == numLevels && this.sprite == "stairsDown") {
         addScore(score, true);
         showTitle();
       } else {
         level++;
-        startLevel(Math.min(maxHP, player.hp+1));
+        if (player.ring)
+          upLevel--;
+
+        if (upLevel == 0) {
+          gameState = STATES.win;
+          player.ring = false;
+          showWin();
+        } else
+          startLevel(Math.min(player.maxHP, player.hp + 1));
       }
     }
   }
