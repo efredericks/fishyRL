@@ -89,6 +89,7 @@ class Floor extends Tile {
       this.ring = false;
       score += 100;
 
+      gameState = STATES.win;
       addScore(score, true);
       showTitle();
     }

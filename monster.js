@@ -122,6 +122,10 @@ class Monster {
     this.dead = true;
     this.tile.monster = null;
     this.sprite = 'dead';
+
+    if (!this.isPlayer) {
+      score += this.maxHP;
+    }
   }
 
   getDisplayX() {
@@ -164,7 +168,8 @@ class Player extends Monster {
   castSpell(index) {
     let spellName = this.spells[index];
     if (spellName) {
-      delete this.spells[index];
+      // delete this.spells[index];
+      this.spells.splice(index, 1);
       spells[spellName]();
       playSound("spell");
       tick();

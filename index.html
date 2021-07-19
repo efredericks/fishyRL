@@ -65,6 +65,14 @@ todo:
 <script>
   // canvas.width = tileSize * (numTiles + uiWidth);
   // canvas.height = tileSize * numTiles;
+  const STATES = {
+    'loading': 0,
+    'running': 1,
+    'dead': 2,
+    'dialogue': 3,
+    'title': 4,
+    'win': 5,
+  }
   tileSize = 64;
   numTiles = 9;
   uiWidth = 4;
@@ -82,7 +90,7 @@ todo:
   spritesheet.onload = showTitle;
   // spritesheet.src = 'colored_transparent_packed.png';
 
-  gameState = "loading";
+  gameState = STATES.loading;
 
   let MOVE_KEYS = {
     'left': ["a", "h"],
@@ -97,11 +105,11 @@ todo:
   };
 
   document.querySelector("html").onkeypress = function (e) {
-    if (gameState == "title")
+    if (gameState == STATES.title)
       startGame();
-    else if (gameState == "dead")
+    else if (gameState == STATES.dead)
       showTitle();
-    else if (gameState == "running") {
+    else if (gameState == STATES.running) {
       if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
       if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
       if (MOVE_KEYS.left.indexOf(e.key) >= 0) player.tryMove(-1, 0);
@@ -120,6 +128,12 @@ todo:
       if (e.key >= 1 && e.key <= 9)
         player.castSpell(e.key - 1);
 
+      if (e.key == "F") {
+        gameState = STATES.dialogue;
+        showDialogue("TEST", "I am a test");
+      }
+    } else if (gameState == STATES.dialogue) {
+      gameState = STATES.running;
     }
   };
 

@@ -69,7 +69,7 @@ function screenshake() {
 }
 
 function draw() {
-  if (gameState == "running" || gameState == "dead") {
+  if (gameState == STATES.running || gameState == STATES.dead) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     screenshake();
@@ -109,7 +109,7 @@ function tick() {
 
   if (player.dead) {
     addScore(score, false);
-    gameState = "dead";
+    gameState = STATES.dead;
   }
 
   // spawnCounter--;
@@ -120,13 +120,36 @@ function tick() {
   // }
 }
 
+function showDialogue(title, message) {
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  gameState = STATES.title;
+
+  drawText(title, 24, true, canvas.height / 2 - 60, "white");
+  drawText(message, 18, true, canvas.height / 2 - 40, "white");
+}
+
 function showTitle() {
   ctx.fillStyle = 'rgba(0,0,0,0.75)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  gameState = "title";
 
-  drawText("><~=fishyRL=>", 40, true, canvas.height / 2 - 40, "white");
+  drawText('><~=fishyRL=>', 40, true, 60, "white");
+  if (gameState == STATES.dead) {
+    drawText("You died again you ponce.", 24, true, 100, "white");
+  } else if (gameState == STATES.win) {
+    let msg = ["You got the Ring of Crendor!", "Now bring it back to the Pawn Shop of Necromatic Intent!"];
+    drawText(msg[0], 24, true, 100, "white");
+    drawText(msg[1], 24, true, 140, "white");
 
+  } else {
+    let msg = ["Go forth and find the infamous Ring of Crendor!", "It's sparkly majesty calls to the deep depths", "of your cold, dead heart,", "yearning to be pawned for a fiver"];
+    drawText(msg[0], 24, true, 100, "white");
+    drawText(msg[1], 24, true, 140, "white");
+    drawText(msg[2], 24, true, 180, "white");
+    drawText(msg[3], 24, true, 220, "white");
+  }
+
+  gameState = STATES.title;
   drawScores();
 }
 
@@ -135,7 +158,7 @@ function startGame() {
   score = 0;
   numSpells = 1;
   startLevel(startingHP);
-  gameState = "running";
+  gameState = STATES.running;
 }
 
 function startLevel(playerHP, playerSpells) {
