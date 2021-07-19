@@ -9,7 +9,8 @@ function generateLevel() {
     randomPassableTile().treasure = true;
   }
 
-  randomPassableTile().ring = true;
+  if (level == numLevels)
+    randomPassableTile().ring = true;
 }
 
 function generateTiles() {

@@ -112,12 +112,12 @@ function tick() {
     gameState = "dead";
   }
 
-  spawnCounter--;
-  if (spawnCounter <= 0) {
-    spawnMonster();
-    spawnCounter = spawnRate;
-    spawnRate--;
-  }
+  // spawnCounter--;
+  // if (spawnCounter <= 0) {
+  //   spawnMonster();
+  //   spawnCounter = spawnRate;
+  //   spawnRate--;
+  // }
 }
 
 function showTitle() {
