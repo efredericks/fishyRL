@@ -20,14 +20,18 @@ spriteLookup = {
   'explosion': { x: 3, y: 8 },
   'zap': { x: 2, y: 8 },
   /* walls */
-  'wall-topleft': {x: 0,y:0},
-  'wall-top': {x:1,y:0},
-  'wall-topright': {x:3,y:0},
-  'wall-left': {x:0,y:1},
-  'wall-right': {x:3,y:1},
-  'wall-bottomleft': {x:0,y:2},
-  'wall-bottomright': {x:3,y:2},
-  'wall-bottom': {x:1,y:0},
+  'wall-topleft': { x: 0, y: 0 },
+  'wall-top': { x: 1, y: 0 },
+  'wall-topright': { x: 3, y: 0 },
+  'wall-left': { x: 0, y: 1 },
+  'wall-right': { x: 3, y: 1 },
+  'wall-bottomleft': { x: 0, y: 2 },
+  'wall-bottomright': { x: 3, y: 2 },
+  'wall-bottom': { x: 1, y: 0 },
+  /* weapons */
+  'sword': { x: 6, y: 4 },
+  /* items */
+  'potion': { x: 7, y: 8 },
 };
 
 function setupCanvas() {
@@ -71,6 +75,20 @@ function drawSprite(sprite, x, y) {
   );
 }
 
+function drawSpriteExact(sprite, x, y) {
+  ctx.drawImage(
+    spritesheet,
+    spriteLookup[sprite].x * 8,//sprite * 16,
+    spriteLookup[sprite].y * 8, //0,
+    8,
+    8,
+    x + shakeX,
+    y + shakeY,
+    tileSize,
+    tileSize
+  );
+}
+
 function screenshake() {
   if (shakeAmount) {
     shakeAmount--;
@@ -103,6 +121,7 @@ function draw() {
 
     player.draw();
 
+    // UI
     if (player.ring)
       drawText("Level: " + upLevel, 30, false, 40, "#ccc");
     else
@@ -110,9 +129,32 @@ function draw() {
 
     drawText("Score: " + score, 30, false, 70, "#ccc");
 
+    drawText("Weapon", 18, false, 100, "aqua");
+    ctx.beginPath();
+    textX = canvas.width - uiWidth * tileSize + 32;
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#ccc";
+    ctx.rect(textX, 110, tileSize + 12, tileSize + 12);
+    ctx.stroke();
+    ctx.closePath();
+    drawSpriteExact('sword', textX + 6, 116);
+
+    drawTextExact("Item", 18, false, canvas.width - 120, 100, "aqua");
+    ctx.beginPath();
+    textX = canvas.width - uiWidth * tileSize + 134;
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#ccc";
+    ctx.rect(textX, 110, tileSize + 12, tileSize + 12);
+    ctx.stroke();
+    ctx.closePath();
+    drawSpriteExact('potion', textX + 6, 116);
+
+
+    drawText("Spells", 18, false, 200, "aqua");
     for (let i = 0; i < player.spells.length; i++) {
       let spellText = (i + 1) + ") " + (player.spells[i] || "");
-      drawText(spellText, 20, false, 110 + i * 40, "aqua");
+      // drawText(spellText, 20, false, 110 + i * 40, "aqua");
+      drawText(spellText, 14, false, 220 + i * 40, "aqua");
     }
 
     if (gameState == STATES.dialogue) {
@@ -242,6 +284,11 @@ function drawText(text, size, centered, textY, color) {
     textX = canvas.width - uiWidth * tileSize + 25;
   }
 
+  ctx.fillText(text, textX, textY);
+}
+function drawTextExact(text, size, centered, textX, textY, color) {
+  ctx.fillStyle = color;
+  ctx.font = size + "px monospace";
   ctx.fillText(text, textX, textY);
 }
 
