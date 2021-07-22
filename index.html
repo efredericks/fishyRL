@@ -355,9 +355,11 @@ todo:
       startGame();
     else if (gameState == STATES.dead)
       showTitle();
-    else if (gameState == STATES.dialogue)
+    else if (gameState == STATES.dialogue) {
       gameState = STATES.running;
-    else if (gameState == STATES.win)
+      player.dialogue = undefined;
+      player.dialogueTitle = undefined;
+    } else if (gameState == STATES.win)
       startGame();
     else if (gameState == STATES.running) {
       if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);

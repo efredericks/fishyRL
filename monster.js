@@ -59,7 +59,7 @@ class Monster {
       drawSprite('tp', this.getDisplayX(), this.getDisplayY());
     else {
       drawSprite(this.sprite, this.getDisplayX(), this.getDisplayY());
-      if (!this.dead)
+      if (!this.dead && !this.isNPC)
         this.drawHP();
     }
 
@@ -87,7 +87,7 @@ class Monster {
       if (!newTile.monster) {
         this.move(newTile);
       } else {
-        if (this.isPlayer != newTile.monster.isPlayer) {
+        if (this.isPlayer != newTile.monster.isPlayer && !newTile.monster.isNPC) {
           this.attackedThisTurn = true;
           newTile.monster.stunned = true;
 
@@ -97,6 +97,14 @@ class Monster {
 
           this.offsetX = (newTile.x - this.tile.x) / 2;
           this.offsetY = (newTile.y - this.tile.y) / 2;
+        } else if (newTile.monster.isNPC) { // chat!
+          shakeAmount = 5;
+          this.offsetX = (newTile.x - this.tile.x) / 2;
+          this.offsetY = (newTile.y - this.tile.y) / 2;
+          gameState = STATES.dialogue;
+          player.dialogueTitle = "NPC";
+          player.dialogue = "Hey how's it going Yaz?";
+          showDialogue(player.dialogueTitle, player.dialogue);
         }
       }
       return true;
@@ -146,6 +154,23 @@ class Monster {
     this.tile = tile;
     tile.monster = this;
     tile.stepOn(this);
+  }
+}
+
+class NPC extends Monster {
+  constructor(tile, dialogue) {
+    super(tile, 'npc', -1);
+    this.isNPC = true;
+    this.teleportCounter = 0;
+    this.dialogue = dialogue;
+  }
+
+  doStuff() {
+
+  }
+
+  chat() {
+    ;
   }
 }
 

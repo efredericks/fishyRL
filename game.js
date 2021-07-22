@@ -1,5 +1,6 @@
 spriteLookup = {
   'pc': { x: 4, y: 0 },//{x: 35, y: 14},
+  'npc': { x: 12, y: 1 },
   'floor': { x: 4, y: 4 }, //{x: 0, y: 0},
   'wall': { x: 2, y: 1 },//{x: 1, y: 17},
   'dog': { x: 5, y: 1 },
@@ -85,6 +86,10 @@ function draw() {
       monsters[i].draw();
     }
 
+    for (let i = 0; i < npcs.length; i++) {
+      npcs[i].draw();
+    }
+
     player.draw();
 
     if (player.ring)
@@ -103,7 +108,10 @@ function draw() {
       if (player.ring)
         showRingMessage();
       else
-        showDialogue("TEST", "I am a test");
+        if (player.dialogueTitle)
+          showDialogue(player.dialogueTitle, player.dialogue);
+        else
+          showDialogue("TEST", "test");
     }
   }
 }

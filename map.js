@@ -4,6 +4,7 @@ function generateLevel() {
   });
 
   generateMonsters();
+  generateNPCs();
 
   for (let i = 0; i < 3; i++) {
     randomPassableTile().treasure = true;
@@ -70,6 +71,12 @@ function generateMonsters() {
   for (let i = 0; i < numMonsters; i++) {
     spawnMonster();
   }
+}
+
+function generateNPCs() {
+  npcs = [];
+  if (level == 1)
+    npcs.push(new NPC(randomPassableTile()));
 }
 
 function spawnMonster() {
