@@ -69,7 +69,13 @@ class Tile {
 
 class Floor extends Tile {
   constructor(x, y) {
-    super(x, y, 'floor', true);
+    let _r = Math.random();
+    let _t = 'floor1';
+    if (_r > 0.95)
+      _t = 'grass';
+    else if (_r > 0.45)
+      _t = 'floor2'
+    super(x, y, _t, true);
   }
 
   stepOn(monster) {
@@ -103,7 +109,24 @@ class Floor extends Tile {
 
 class Wall extends Tile {
   constructor(x, y) {
-    super(x, y, 'wall', false);
+    let _t = 'wall';
+    if (x == 0 && y == 0) // top left
+      _t = 'wall-topleft';
+    else if (x == 0 && y == numTiles-1) // bottom left
+      _t = 'wall-bottomleft';
+    else if (x == 0) // left
+      _t = 'wall-left';
+    else if (y == 0 && x == numTiles-1) // top right
+      _t = 'wall-topright';
+    else if (y == 0) // top
+      _t = 'wall-top';
+    else if (x == numTiles-1 && y == numTiles-1) // bottom right
+      _t = 'wall-bottomright';
+    else if (x == numTiles-1) // right
+      _t = 'wall-right';
+    else if (y == numTiles-1) // bottom
+      _t = 'wall-bottom';
+    super(x, y, _t, false);
   }
 }
 

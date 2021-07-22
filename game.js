@@ -1,7 +1,9 @@
 spriteLookup = {
   'pc': { x: 4, y: 0 },//{x: 35, y: 14},
   'npc': { x: 12, y: 1 },
-  'floor': { x: 4, y: 4 }, //{x: 0, y: 0},
+  'floor1': { x: 4, y: 4 },
+  'grass': { x: 5, y: 4 },
+  'floor2': { x: 1, y: 1 },
   'wall': { x: 2, y: 1 },//{x: 1, y: 17},
   'dog': { x: 5, y: 1 },
   'rat': { x: 6, y: 1 },
@@ -17,6 +19,15 @@ spriteLookup = {
   'heal': { x: 4, y: 8 },
   'explosion': { x: 3, y: 8 },
   'zap': { x: 2, y: 8 },
+  /* walls */
+  'wall-topleft': {x: 0,y:0},
+  'wall-top': {x:1,y:0},
+  'wall-topright': {x:3,y:0},
+  'wall-left': {x:0,y:1},
+  'wall-right': {x:3,y:1},
+  'wall-bottomleft': {x:0,y:2},
+  'wall-bottomright': {x:3,y:2},
+  'wall-bottom': {x:1,y:0},
 };
 
 function setupCanvas() {
@@ -123,6 +134,14 @@ function tick() {
       monsters[k].update();
     } else {
       monsters.splice(k, 1);
+    }
+  }
+
+  for (let k = npcs.length - 1; k >= 0; k--) {
+    if (!npcs[k].dead) {
+      npcs[k].update();
+    } else {
+      npcs.splice(k, 1);
     }
   }
 

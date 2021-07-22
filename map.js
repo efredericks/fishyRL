@@ -76,7 +76,7 @@ function generateMonsters() {
 function generateNPCs() {
   npcs = [];
   if (level == 1)
-    npcs.push(new NPC(randomPassableTile()));
+    npcs.push(new NPC(randomPassableTile(), "Yaz", ["I am the YazMan", "Look to my dungeon and despair!", "I'm so bored"]));
 }
 
 function spawnMonster() {

@@ -87,7 +87,7 @@ class Monster {
       if (!newTile.monster) {
         this.move(newTile);
       } else {
-        if (this.isPlayer != newTile.monster.isPlayer && !newTile.monster.isNPC) {
+        if (this.isPlayer != newTile.monster.isPlayer && !newTile.monster.isNPC && !this.isNPC) {
           this.attackedThisTurn = true;
           newTile.monster.stunned = true;
 
@@ -101,10 +101,9 @@ class Monster {
           shakeAmount = 5;
           this.offsetX = (newTile.x - this.tile.x) / 2;
           this.offsetY = (newTile.y - this.tile.y) / 2;
+
+          newTile.monster.chat();
           gameState = STATES.dialogue;
-          player.dialogueTitle = "NPC";
-          player.dialogue = "Hey how's it going Yaz?";
-          showDialogue(player.dialogueTitle, player.dialogue);
         }
       }
       return true;
@@ -158,19 +157,30 @@ class Monster {
 }
 
 class NPC extends Monster {
-  constructor(tile, dialogue) {
+  constructor(tile, name, dialogue) {
     super(tile, 'npc', -1);
     this.isNPC = true;
     this.teleportCounter = 0;
+    this.name = name;
     this.dialogue = dialogue;
+    this.dialogueIndex = 0;
   }
 
   doStuff() {
-
+    let neighbors = this.tile.getAdjacentPassableNeighbors();
+    if (neighbors.length) {
+      this.tryMove(neighbors[0].x - this.tile.x, neighbors[0].y - this.tile.y);
+    }
   }
 
   chat() {
-    ;
+    player.dialogueTitle = this.name;
+    player.dialogue = this.dialogue[this.dialogueIndex];
+    showDialogue(player.dialogueTitle, player.dialogue);
+
+    this.dialogueIndex++;
+    if (this.dialogueIndex >= this.dialogue.length)
+      this.dialogueIndex = 0;
   }
 }
 
