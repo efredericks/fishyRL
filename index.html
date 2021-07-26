@@ -380,6 +380,9 @@ todo:
       if (e.key >= 1 && e.key <= 9)
         player.castSpell(e.key - 1);
 
+      // item
+      if (e.key == "q") player.usePotion();
+
       // DEBUG
       if (e.key == "F") {
         gameState = STATES.dialogue;

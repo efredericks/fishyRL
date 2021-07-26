@@ -6,6 +6,10 @@ function generateLevel() {
   generateMonsters();
   generateNPCs();
 
+  for (let i = 0; i < 2; i++) {
+    randomPassableTile().potion = true;
+  }
+
   for (let i = 0; i < 3; i++) {
     randomPassableTile().treasure = true;
   }
@@ -74,9 +78,10 @@ function generateMonsters() {
 }
 
 function generateNPCs() {
+  npc_names = ["Yaz", "Lord Dag", "Wobb", "Anne who was a Ghost", "Big J", "The Murph"];
   npcs = [];
   if (level == 1)
-    npcs.push(new NPC(randomPassableTile(), "Yaz", ["I am the YazMan", "Look to my dungeon and despair!", "I'm so bored"]));
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], ["Look to my dungeon and despair!", "I'm so bored"]));
 }
 
 function spawnMonster() {

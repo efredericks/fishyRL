@@ -48,8 +48,11 @@ class Tile {
   draw() {
     drawSprite(this.sprite, this.x, this.y);
 
+    // TBD - layering?
     if (this.treasure)
       drawSprite('coin', this.x, this.y);
+    else if (this.potion)
+      drawSprite('potion', this.x, this.y);
     else if (this.ring)
       drawSprite('ring', this.x, this.y);
 
@@ -90,6 +93,11 @@ class Floor extends Tile {
       playSound("treasure");
       this.treasure = false;
       spawnMonster();
+    } else if (monster.isPlayer && this.potion) {
+      player.potion++;
+      this.potion = false;
+      playSound("treasure"); // TBD - new sound
+
     } else if (monster.isPlayer && this.ring) {
       playSound("ring");
       this.ring = false;

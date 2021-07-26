@@ -191,6 +191,7 @@ class Player extends Monster {
     this.teleportCounter = 0;
     this.spells = shuffle(Object.keys(spells)).splice(0, numSpells);
     this.ring = ring;
+    this.potion = 0;
   }
 
   update() {
@@ -204,6 +205,14 @@ class Player extends Monster {
 
   castRing() {
 
+  }
+
+  usePotion() {
+    if (player.potion > 0) {
+      player.heal(10);
+      player.potion--;
+      playSound("spell");
+    }
   }
 
   castSpell(index) {

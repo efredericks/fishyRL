@@ -147,14 +147,27 @@ function draw() {
     ctx.rect(textX, 110, tileSize + 12, tileSize + 12);
     ctx.stroke();
     ctx.closePath();
-    drawSpriteExact('potion', textX + 6, 116);
+
+    if (player.potion > 0) {
+      // key
+      drawTextExact('(q)', 14, false, textX+tileSize+16, 116+tileSize+2, "white");
+      // ctx.beginPath();
+      // ctx.fillStyle = 'rgba(0,0,0,0.75)';
+      // ctx.fillRect(textX+tileSize+5,116+tileSize, 22, 22);
+      drawSpriteExact('potion', textX + 6, 116);
+      // drawTextExact("q", 18, false, textX+tileSize+11, 116+tileSize+15, "aqua");
+      // ctx.closePath();
+
+      // amt
+      drawTextExact(`x${player.potion}`, 14, false, textX+tileSize+16, 116, "white");
+    }
 
 
     drawText("Spells", 18, false, 200, "aqua");
     for (let i = 0; i < player.spells.length; i++) {
       let spellText = (i + 1) + ") " + (player.spells[i] || "");
       // drawText(spellText, 20, false, 110 + i * 40, "aqua");
-      drawText(spellText, 14, false, 220 + i * 40, "aqua");
+      drawText(spellText, 14, false, 220 + i * 20, "aqua");
     }
 
     if (gameState == STATES.dialogue) {
