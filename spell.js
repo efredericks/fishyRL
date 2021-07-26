@@ -7,7 +7,7 @@ spells = {
     for (let i = 0; i < numTiles; i++) {
       for (let j = 0; j < numTiles; j++) {
         let tile = getTile(i, j);
-        if (tile.monster) {
+        if (tile.monster && !tile.monster.isNPC) {
           let numWalls = 4 - tile.getAdjacentPassableNeighbors().length;
           tile.monster.hit(numWalls * 2);
         }

@@ -264,7 +264,7 @@ function showTitle() {
 function startGame() {
   level = 1;
   score = 0;
-  numSpells = 1;
+  numSpells = 9;//1;
   startLevel(startingHP);
   gameState = STATES.running;
 }
@@ -275,11 +275,15 @@ function startLevel(playerHP, playerSpells) {
   generateLevel();
 
   let ring = false;
-  if (typeof player != "undefined")
+  let numPotions = 0;
+  if (typeof player != "undefined") {
     ring = player.ring;
+    numPotions = player.potion;
+  }
   player = new Player(randomPassableTile(), ring);
   player.hp = playerHP;
   player.maxHP = player.hp;
+  player.potion = numPotions;
 
   if (playerSpells)
     player.spells = playerSpells;
