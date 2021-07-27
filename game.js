@@ -1,3 +1,6 @@
+const TEXT_X_OFFSET = 10;
+const TEXT_Y_OFFSET = 24;
+
 spriteLookup = {
   'pc': { x: 4, y: 0, char: '@', color: 'white' },//{x: 35, y: 14},
   'npc': { x: 12, y: 1, char: 'N', color: 'teal' },
@@ -28,6 +31,7 @@ spriteLookup = {
   'wall-bottomleft': { x: 0, y: 2, char: '#', color: 'gray' },
   'wall-bottomright': { x: 3, y: 2, char: '#', color: 'gray' },
   'wall-bottom': { x: 1, y: 0, char: '#', color: 'gray' },
+  'exit': {x:4, y:2, char:'<', color:'orange'},
   /* weapons */
   'sword': { x: 6, y: 4, char: 'S', color: 'white' },
   /* items */
@@ -85,7 +89,7 @@ function drawSprite(sprite, x, y) {
       tileSize
     );
   } else {
-    drawTextExact(spriteLookup[sprite].char, 24, false, x * tileSize + shakeX + 10, y * tileSize + shakeY + 22, spriteLookup[sprite].color);
+    drawTextExact(spriteLookup[sprite].char, 24, false, x * tileSize + shakeX + TEXT_X_OFFSET, y * tileSize + shakeY + TEXT_Y_OFFSET, spriteLookup[sprite].color);
   }
 }
 
@@ -103,7 +107,7 @@ function drawSpriteExact(sprite, x, y) {
       tileSize
     );
   } else {
-    drawTextExact(spriteLookup[sprite].char, 24, false, x + shakeX + 10, y + shakeY + 22, spriteLookup[sprite].color);
+    drawTextExact(spriteLookup[sprite].char, 24, false, x + shakeX + TEXT_X_OFFSET, y + shakeY + TEXT_Y_OFFSET, spriteLookup[sprite].color);
   }
 }
 

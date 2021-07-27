@@ -143,15 +143,21 @@ class Exit extends Tile {
     player.exitPosition = { x: x, y: y };
 
     if (player.ring)
-      super(x, y, 'stairsUp', true);
+      if (upLevel == 1)
+        super(x, y, 'exit', true);
+      else
+        super(x, y, 'stairsUp', true);
     else
-      super(x, y, 'stairsDown', true);
+      if (level == numLevels)
+        super(x, y, 'exit', true);
+      else
+        super(x, y, 'stairsDown', true);
   }
 
   stepOn(monster) {
     if (monster.isPlayer) {
       playSound("newLevel");
-      if (level == numLevels && this.sprite == "stairsDown") {
+      if (level == numLevels && (this.sprite == "stairsDown" || this.sprite == 'exit')) {
         addScore(score, true);
         showTitle();
       } else {
