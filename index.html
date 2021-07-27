@@ -11,6 +11,10 @@ todo:
 - floor layouts
 - puzzles?
 - purpose?
+  - normal game as is (3 levels, can win with an asterisk, easy monsters)
+  - flip to ascii mode OMG WHAT HAAVE YOU DONE
+  - FIX IT FIX IT!
+    - "night mode"
 -->
 <html>
 
@@ -326,6 +330,7 @@ todo:
   numLevels = 6;
   maxHP = 6;
   startingHP = 100;//3;
+  asciiMode = false;
 
   shakeAmount = 0;
   shakeX = 0;
@@ -382,6 +387,9 @@ todo:
 
       // item
       if (e.key == "q") player.usePotion();
+
+      // toggle mode
+      if (e.key == "~") asciiMode = !asciiMode;
 
       // DEBUG
       if (e.key == "F") {

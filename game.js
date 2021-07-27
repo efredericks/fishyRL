@@ -1,37 +1,47 @@
 spriteLookup = {
-  'pc': { x: 4, y: 0 },//{x: 35, y: 14},
-  'npc': { x: 12, y: 1 },
-  'floor1': { x: 4, y: 4 },
-  'grass': { x: 5, y: 4 },
-  'floor2': { x: 1, y: 1 },
-  'wall': { x: 2, y: 1 },//{x: 1, y: 17},
-  'dog': { x: 5, y: 1 },
-  'rat': { x: 6, y: 1 },
-  'snake': { x: 4, y: 1 },
-  'crab': { x: 12, y: 0 },
-  'beholder': { x: 13, y: 0 },
-  'dead': { x: 9, y: 7 },
-  'tp': { x: 1, y: 8 },
-  'stairsDown': { x: 4, y: 3 },
-  'stairsUp': { x: 5, y: 3 },
-  'coin': { x: 8, y: 5 },
-  'ring': { x: 9, y: 5 },
-  'heal': { x: 4, y: 8 },
-  'explosion': { x: 3, y: 8 },
-  'zap': { x: 2, y: 8 },
+  'pc': { x: 4, y: 0, char: '@', color: 'white' },//{x: 35, y: 14},
+  'npc': { x: 12, y: 1, char: 'N', color: 'teal' },
+  'floor1': { x: 4, y: 4, char: ' ', color: 'gray' },
+  'grass': { x: 5, y: 4, char: '\'', color: 'rgba(0,255,0,0.6)' },
+  'floor2': { x: 1, y: 1, char: '.', color: 'gray' },
+  'wall': { x: 2, y: 1, char: '#', color: 'gray' },//{x: 1, y: 17},
+  'dog': { x: 5, y: 1, char: 'd', color: 'red' },
+  'rat': { x: 6, y: 1, char: 'r', color: 'red' },
+  'snake': { x: 4, y: 1, char: 's', color: 'red' },
+  'crab': { x: 12, y: 0, char: 'c', color: 'red' },
+  'beholder': { x: 13, y: 0, char: 'B', color: 'red' },
+  'dead': { x: 9, y: 7, char: '%', color: 'white' },
+  'tp': { x: 1, y: 8, char: '~', color: 'rgba(255,0,255,1.0)' },
+  'stairsDown': { x: 4, y: 3, char: '>', color: 'white' },
+  'stairsUp': { x: 5, y: 3, char: '<', color: 'white' },
+  'coin': { x: 8, y: 5, char: '$', color: 'yellow' },
+  'ring': { x: 9, y: 5, char: '!', color: 'white' },
+  'heal': { x: 4, y: 8, char: 'H', color: 'white' },
+  'explosion': { x: 3, y: 8, char: 'E', color: 'white' },
+  'zap': { x: 2, y: 8, char: 'Z', color: 'white' },
   /* walls */
-  'wall-topleft': { x: 0, y: 0 },
-  'wall-top': { x: 1, y: 0 },
-  'wall-topright': { x: 3, y: 0 },
-  'wall-left': { x: 0, y: 1 },
-  'wall-right': { x: 3, y: 1 },
-  'wall-bottomleft': { x: 0, y: 2 },
-  'wall-bottomright': { x: 3, y: 2 },
-  'wall-bottom': { x: 1, y: 0 },
+  'wall-topleft': { x: 0, y: 0, char: '#', color: 'gray' },
+  'wall-top': { x: 1, y: 0, char: '#', color: 'gray' },
+  'wall-topright': { x: 3, y: 0, char: '#', color: 'gray' },
+  'wall-left': { x: 0, y: 1, char: '#', color: 'gray' },
+  'wall-right': { x: 3, y: 1, char: '#', color: 'gray' },
+  'wall-bottomleft': { x: 0, y: 2, char: '#', color: 'gray' },
+  'wall-bottomright': { x: 3, y: 2, char: '#', color: 'gray' },
+  'wall-bottom': { x: 1, y: 0, char: '#', color: 'gray' },
   /* weapons */
-  'sword': { x: 6, y: 4 },
+  'sword': { x: 6, y: 4, char: 'S', color: 'white' },
   /* items */
-  'potion': { x: 7, y: 8 },
+  'potion': { x: 7, y: 8, char: '!', color: 'magenta' },
+};
+
+const spriteMap = {
+  'pc': { char: '@', color: 'yellow' },
+  'npc': { char: 'N', color: 'teal' },
+  'crab': { char: 'c', color: 'red' },
+  'dog': { char: 'd', color: 'red' },
+  'rat': { char: 'r', color: 'red' },
+  'snake': { char: 's', color: 'red' },
+  'beholder': { char: 'B', color: 'red' },
 };
 
 function setupCanvas() {
@@ -62,31 +72,39 @@ function playSound(sound) {
 }
 
 function drawSprite(sprite, x, y) {
-  ctx.drawImage(
-    spritesheet,
-    spriteLookup[sprite].x * 8,//sprite * 16,
-    spriteLookup[sprite].y * 8, //0,
-    8,
-    8,
-    x * tileSize + shakeX,
-    y * tileSize + shakeY,
-    tileSize,
-    tileSize
-  );
+  if (!asciiMode) {
+    ctx.drawImage(
+      spritesheet,
+      spriteLookup[sprite].x * 8,//sprite * 16,
+      spriteLookup[sprite].y * 8, //0,
+      8,
+      8,
+      x * tileSize + shakeX,
+      y * tileSize + shakeY,
+      tileSize,
+      tileSize
+    );
+  } else {
+    drawTextExact(spriteLookup[sprite].char, 24, false, x * tileSize + shakeX + 10, y * tileSize + shakeY + 22, spriteLookup[sprite].color);
+  }
 }
 
 function drawSpriteExact(sprite, x, y) {
-  ctx.drawImage(
-    spritesheet,
-    spriteLookup[sprite].x * 8,//sprite * 16,
-    spriteLookup[sprite].y * 8, //0,
-    8,
-    8,
-    x + shakeX,
-    y + shakeY,
-    tileSize,
-    tileSize
-  );
+  if (!asciiMode) {
+    ctx.drawImage(
+      spritesheet,
+      spriteLookup[sprite].x * 8,//sprite * 16,
+      spriteLookup[sprite].y * 8, //0,
+      8,
+      8,
+      x + shakeX,
+      y + shakeY,
+      tileSize,
+      tileSize
+    );
+  } else {
+    drawTextExact(spriteLookup[sprite].char, 24, false, x + shakeX + 10, y + shakeY + 22, spriteLookup[sprite].color);
+  }
 }
 
 function screenshake() {
@@ -150,7 +168,7 @@ function draw() {
 
     if (player.potion > 0) {
       // key
-      drawTextExact('(q)', 14, false, textX+tileSize+16, 116+tileSize+2, "white");
+      drawTextExact('(q)', 14, false, textX + tileSize + 16, 116 + tileSize + 2, "white");
       // ctx.beginPath();
       // ctx.fillStyle = 'rgba(0,0,0,0.75)';
       // ctx.fillRect(textX+tileSize+5,116+tileSize, 22, 22);
@@ -159,7 +177,7 @@ function draw() {
       // ctx.closePath();
 
       // amt
-      drawTextExact(`x${player.potion}`, 14, false, textX+tileSize+16, 116, "white");
+      drawTextExact(`x${player.potion}`, 14, false, textX + tileSize + 16, 116, "white");
     }
 
 

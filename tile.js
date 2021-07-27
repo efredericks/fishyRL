@@ -120,19 +120,19 @@ class Wall extends Tile {
     let _t = 'wall';
     if (x == 0 && y == 0) // top left
       _t = 'wall-topleft';
-    else if (x == 0 && y == numTiles-1) // bottom left
+    else if (x == 0 && y == numTiles - 1) // bottom left
       _t = 'wall-bottomleft';
     else if (x == 0) // left
       _t = 'wall-left';
-    else if (y == 0 && x == numTiles-1) // top right
+    else if (y == 0 && x == numTiles - 1) // top right
       _t = 'wall-topright';
     else if (y == 0) // top
       _t = 'wall-top';
-    else if (x == numTiles-1 && y == numTiles-1) // bottom right
+    else if (x == numTiles - 1 && y == numTiles - 1) // bottom right
       _t = 'wall-bottomright';
-    else if (x == numTiles-1) // right
+    else if (x == numTiles - 1) // right
       _t = 'wall-right';
-    else if (y == numTiles-1) // bottom
+    else if (y == numTiles - 1) // bottom
       _t = 'wall-bottom';
     super(x, y, _t, false);
   }
@@ -140,7 +140,7 @@ class Wall extends Tile {
 
 class Exit extends Tile {
   constructor(x, y) {
-    player.exitPosition = {x: x, y: y};
+    player.exitPosition = { x: x, y: y };
 
     if (player.ring)
       super(x, y, 'stairsUp', true);

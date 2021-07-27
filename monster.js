@@ -175,7 +175,10 @@ class NPC extends Monster {
 
   chat() {
     player.dialogueTitle = this.name;
-    player.dialogue = this.dialogue[this.dialogueIndex];
+    if (!asciiMode)
+      player.dialogue = this.dialogue[this.dialogueIndex];
+    else
+      player.dialogue = "WHAT HAVE YOU DONE!?!?!?!";
     showDialogue(player.dialogueTitle, player.dialogue);
 
     this.dialogueIndex++;
