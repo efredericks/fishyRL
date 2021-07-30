@@ -367,6 +367,8 @@ todo:
     } else if (gameState == STATES.win)
       startGame();
     else if (gameState == STATES.running) {
+      // NUMPAD keys not handled here -- need to check the location as
+      // they seem to have the same key/keyCode as the number row
       if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
       if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
       if (MOVE_KEYS.left.indexOf(e.key) >= 0) player.tryMove(-1, 0);
@@ -378,12 +380,26 @@ todo:
       if (MOVE_KEYS.downleft.indexOf(e.key) >= 0) player.tryMove(-1, 1);
       if (MOVE_KEYS.downright.indexOf(e.key) >= 0) player.tryMove(1, 1);
 
+      // console.log(e.key, e.keyCode, e.which, e.DOM_KEY_LOCATION_NUMPAD, e.location, e.type, e.which);
+
       // unsurprisingly, wait
       if (e.key == ".") player.wait();
 
       // spells
-      if (e.key >= 1 && e.key <= 9)
+      if (e.key >= 1 && e.key <= 9 && e.location == 0)
         player.castSpell(e.key - 1);
+      else if (e.key >= 1 && e.key <= 9 && e.location == 3) { // move keys (numpad)
+        if (e.key == 8) player.tryMove(0, -1);
+        if (e.key == 2) player.tryMove(0, 1);
+        if (e.key == 4) player.tryMove(-1, 0);
+        if (e.key == 6) player.tryMove(1, 0);
+
+        // diags
+        if (e.key == 9) player.tryMove(1, -1);
+        if (e.key == 7) player.tryMove(-1, -1);
+        if (e.key == 1) player.tryMove(-1, 1);
+        if (e.key == 3) player.tryMove(1, 1);
+      }
 
       // item
       if (e.key == "q") player.usePotion();
