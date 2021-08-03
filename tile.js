@@ -100,6 +100,7 @@ class Floor extends Tile {
 
     } else if (monster.isPlayer && this.ring) {
       playSound("ring");
+      asciiMode = true;
       this.ring = false;
       score += 100;
 

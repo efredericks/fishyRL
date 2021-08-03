@@ -77,11 +77,21 @@ function generateMonsters() {
   }
 }
 
+const NPCChatter = {
+  'tut': [
+    "Welcome to the Dungeon!",
+    "It's pretty exciting seeing another person here, not much has been going on.",
+    "There's a macguffin of sorts at the bottom here, but I'd avoid it if I were you.",
+    "Oh heavens no, not cursed.  Just something to avoid I've heard.",
+    "I've not gone to see it, no.  Too many sneks and crabs. I'm allergic, you see.",
+  ],
+}
+
 function generateNPCs() {
   npc_names = ["Yaz", "Lord Dag", "Wobb", "Anne who was a Ghost", "Big J", "The Murph"];
   npcs = [];
   if (level == 1)
-    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], ["Look to my dungeon and despair!", "I'm so bored"]));
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut));//["Look to my dungeon and despair!", "I'm so bored"]));
 }
 
 function spawnMonster() {

@@ -31,7 +31,7 @@ spriteLookup = {
   'wall-bottomleft': { x: 0, y: 2, char: '#', color: 'gray' },
   'wall-bottomright': { x: 3, y: 2, char: '#', color: 'gray' },
   'wall-bottom': { x: 1, y: 0, char: '#', color: 'gray' },
-  'exit': {x:4, y:2, char:'<', color:'orange'},
+  'exit': { x: 4, y: 2, char: '<', color: 'orange' },
   /* weapons */
   'sword': { x: 6, y: 4, char: 'S', color: 'white' },
   /* items */
@@ -310,7 +310,8 @@ function startLevel(playerHP, playerSpells) {
   if (playerSpells)
     player.spells = playerSpells;
 
-  randomPassableTile().replace(Exit);
+  if (level < numLevels || (player.ring && upLevel < numLevels))
+    randomPassableTile().replace(Exit);
 }
 
 function drawText(text, size, centered, textY, color) {
