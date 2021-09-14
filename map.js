@@ -75,6 +75,14 @@ function generateMonsters() {
   for (let i = 0; i < numMonsters; i++) {
     spawnMonster();
   }
+
+  if (level == 1) {
+    spawnBarrel();
+  } else {
+    for (let i = 0; i < numMonsters; i++)
+      spawnBarrel();
+
+  }
 }
 
 const NPCChatter = {
@@ -92,10 +100,16 @@ function generateNPCs() {
   npcs = [];
   if (level == 1)
     npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut));//["Look to my dungeon and despair!", "I'm so bored"]));
+  if (level == 2)
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut));//["Look to my dungeon and despair!", "I'm so bored"]));
 }
 
 function spawnMonster() {
   let monsterType = shuffle([Dog, Rat, Crab, Beholder, Snake])[0];
   let monster = new monsterType(randomPassableTile());
   monsters.push(monster);
+}
+
+function spawnBarrel() {
+  monsters.push(new Barrel(randomPassableTile()));
 }

@@ -16,6 +16,8 @@ function drawHealthBar(x, y, w, h, perc) {
   ctx.closePath();
 }
 
+// block is a monster?
+
 class Monster {
   constructor(tile, sprite, hp) {
     this.move(tile);
@@ -129,6 +131,7 @@ class Monster {
   die() {
     this.dead = true;
     this.tile.monster = null;
+
     this.sprite = 'dead';
 
     if (!this.isPlayer) {
@@ -241,6 +244,30 @@ class Player extends Monster {
   }
 }
 
+/* Traps */
+class Barrel extends Monster {
+  constructor(tile) {
+    super(tile, 'barrel', 10);
+  }
+
+  explode() {
+    spells['ENEMY_CROSS'](this);
+    playSound("spell");
+    console.log('KABOOM');
+    this.die();
+    // tick();
+  }
+
+  doStuff() { 
+    if (this.teleportCounter <= 0) {
+      this.hp--;
+      if (this.hp <= 0) this.explode();
+    }
+  }
+  tryMove() { ; }
+}
+
+/* Enemies */
 class Dog extends Monster {
   constructor(tile) {
     super(tile, 'dog', 3);

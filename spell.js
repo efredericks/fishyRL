@@ -110,6 +110,18 @@ spells = {
     boltTravel(player.lastMove, 'zap', 4);
   },
 
+  ENEMY_CROSS: function (e) {
+    let directions = [
+      [0, -1],
+      [0, 1],
+      [-1, 0],
+      [1, 0]
+    ];
+    for (let k = 0; k < directions.length; k++) {
+      enemyBoltTravel(e, directions[k], 'zap', 2);
+    }
+  },
+
   CROSS: function () {
     let directions = [
       [0, -1],
@@ -135,6 +147,7 @@ spells = {
   }
 };
 
+// player bolt
 function boltTravel(direction, effect, damage) {
   let newTile = player.tile;
   while (true) {
@@ -143,6 +156,23 @@ function boltTravel(direction, effect, damage) {
       newTile = testTile;
       if (newTile.monster) {
         newTile.monster.hit(damage);
+      }
+      newTile.setEffect(effect);
+    } else {
+      break;
+    }
+  }
+}
+
+// enemy bolt
+function enemyBoltTravel(enemy, direction, effect, damage) {
+  let newTile = enemy.tile;
+  while (true) {
+    let testTile = newTile.getNeighbor(direction[0], direction[1]);
+    if (testTile.passable) {
+      newTile = testTile;
+      if (newTile.monster){//} && newTile.monster.isPlayer) {
+        newTile.monster.hit(500);//damage);
       }
       newTile.setEffect(effect);
     } else {
