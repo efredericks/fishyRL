@@ -37,7 +37,8 @@ spriteLookup = {
   /* items */
   'potion': { x: 7, y: 8, char: '!', color: 'magenta' },
   /* traps */
-  'barrel': { x: 9, y: 8, char: '~', color: 'red' },
+  'barrel': { x: 9, y: 8, char: '+', color: 'red' },
+  'barrelx': { x: 7, y: 1, char: 'x', color: 'red' },
 };
 
 const spriteMap = {

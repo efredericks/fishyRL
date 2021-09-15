@@ -269,6 +269,30 @@ class Barrel extends Monster {
     this.hp = 1;
   }
 }
+class BarrelX extends Monster {
+  constructor(tile) {
+    super(tile, 'barrelx', randomRange(5,15));
+  }
+
+  explode() {
+    spells['ENEMY_EX'](this);
+    playSound("spell");
+    console.log('KABOOM');
+    this.die();
+    // tick();
+  }
+
+  doStuff() { 
+    if (this.teleportCounter <= 0) {
+      this.hp--;
+      if (this.hp <= 0) this.explode();
+    }
+  }
+  tryMove() { ; }
+  hit() {
+    this.hp = 1;
+  }
+}
 
 /* Enemies */
 class Dog extends Monster {

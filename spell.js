@@ -121,6 +121,17 @@ spells = {
       enemyBoltTravel(e, directions[k], 'zap', 2);
     }
   },
+  ENEMY_EX: function (e) {
+    let directions = [
+      [-1, -1],
+      [-1, 1],
+      [1, -1],
+      [1, 1]
+    ];
+    for (let k = 0; k < directions.length; k++) {
+      enemyBoltTravel(e, directions[k], 'zap', 3);
+    }
+  },
 
   CROSS: function () {
     let directions = [

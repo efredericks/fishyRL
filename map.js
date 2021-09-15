@@ -84,12 +84,12 @@ function generateMonsters() {
   }
 
   if (level == 1) {
-    spawnBarrel();
+    spawnBarrel(Barrel);
   } else if (level == 2) { // cross trap
-    spawnBarrel(2,2);
-    spawnBarrel(numTiles-3,numTiles-3);
-    spawnBarrel(2,numTiles-3);
-    spawnBarrel(numTiles-3,2);
+    spawnBarrel(BarrelX,2,2);
+    spawnBarrel(BarrelX,numTiles-3,numTiles-3);
+    spawnBarrel(BarrelX,2,numTiles-3);
+    spawnBarrel(BarrelX,numTiles-3,2);
   } else {
     for (let i = 0; i < numMonsters; i++)
       spawnBarrel();
@@ -121,9 +121,13 @@ function spawnMonster() {
   monsters.push(monster);
 }
 
-function spawnBarrel(i,j) {
+function spawnBarrel(t, i,j) {
+  let monsterType = shuffle([Barrel, BarrelX])[0];
+  if (t !== undefined)
+    monsterType = t;
+
   if (i === undefined && j === undefined)
-    monsters.push(new Barrel(randomPassableTile()));
+    monsters.push(new monsterType(randomPassableTile()));
   else
-    monsters.push(new Barrel(getTile(i,j)));
+    monsters.push(new monsterType(getTile(i,j)));
 }
