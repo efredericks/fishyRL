@@ -34,6 +34,13 @@ function generateTiles() {
           passableTiles++;
         }
 
+      } else if (level == 2) { // trap demo
+        if (!inBounds(i, j)) {
+          tiles[i][j] = new Wall(i, j);
+        } else {
+          tiles[i][j] = new Floor(i, j);
+          passableTiles++;
+        }
       } else {
         if (Math.random() < 0.3 || !inBounds(i, j)) {
           tiles[i][j] = new Wall(i, j);
@@ -78,10 +85,14 @@ function generateMonsters() {
 
   if (level == 1) {
     spawnBarrel();
+  } else if (level == 2) { // cross trap
+    spawnBarrel(2,2);
+    spawnBarrel(numTiles-3,numTiles-3);
+    spawnBarrel(2,numTiles-3);
+    spawnBarrel(numTiles-3,2);
   } else {
     for (let i = 0; i < numMonsters; i++)
       spawnBarrel();
-
   }
 }
 
@@ -110,6 +121,9 @@ function spawnMonster() {
   monsters.push(monster);
 }
 
-function spawnBarrel() {
-  monsters.push(new Barrel(randomPassableTile()));
+function spawnBarrel(i,j) {
+  if (i === undefined && j === undefined)
+    monsters.push(new Barrel(randomPassableTile()));
+  else
+    monsters.push(new Barrel(getTile(i,j)));
 }
