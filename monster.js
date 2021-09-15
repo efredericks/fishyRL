@@ -247,7 +247,7 @@ class Player extends Monster {
 /* Traps */
 class Barrel extends Monster {
   constructor(tile) {
-    super(tile, 'barrel', 10);
+    super(tile, 'barrel', randomRange(5,15));
   }
 
   explode() {
@@ -265,6 +265,9 @@ class Barrel extends Monster {
     }
   }
   tryMove() { ; }
+  hit() {
+    this.hp = 1;
+  }
 }
 
 /* Enemies */
