@@ -2,6 +2,44 @@ const TEXT_X_OFFSET = 10;
 const TEXT_Y_OFFSET = 24;
 
 spriteLookup = {
+  'pc': { x: 24, y: 7, char: '@', color: 'white' },//{x: 35, y: 14},
+  'npc': { x: 35, y: 14, char: 'N', color: 'teal' },
+  'floor1': { x: 0, y: 0, char: ' ', color: 'gray' },
+  'grass': { x: 5, y: 0, char: '\'', color: 'rgba(0,255,0,0.6)' },
+  'floor2': { x: 1, y: 0, char: '.', color: 'gray' },
+  'wall': { x: 1, y: 17, char: '#', color: 'gray' },//{x: 1, y: 17},
+  'dog': { x: 31, y: 7, char: 'd', color: 'red' },
+  'rat': { x: 31, y: 8, char: 'r', color: 'red' },
+  'snake': { x: 27, y: 8, char: 's', color: 'red' },
+  'crab': { x: 25, y: 5, char: 'c', color: 'red' },
+  'beholder': { x: 31, y: 8, char: 'B', color: 'red' },
+  'dead': { x: 0, y: 15, char: '%', color: 'white' },
+  'tp': { x: 36, y: 11, char: '~', color: 'rgba(255,0,255,1.0)' },
+  'stairsDown': { x: 3, y: 6, char: '>', color: 'white' },
+  'stairsUp': { x: 2, y: 6, char: '<', color: 'white' },
+  'coin': { x: 41, y: 3, char: '$', color: 'yellow' },
+  'ring': { x: 46, y: 6, char: '!', color: 'white' },
+  'heal': { x: 31, y: 12, char: 'H', color: 'white' },
+  'explosion': { x: 37, y: 11, char: 'E', color: 'white' },
+  'zap': { x: 30, y: 12, char: 'Z', color: 'white' },
+  // walls 
+  'wall-topleft': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-top': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-topright': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-left': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-right': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-bottomleft': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-bottomright': { x: 1, y: 17, char: '#', color: 'gray' },
+  'wall-bottom': { x: 1, y: 17, char: '#', color: 'gray' },
+  'exit': { x: 4, y: 2, char: '<', color: 'orange' },
+  // weapons 
+  'sword': { x: 33, y: 8, char: 'S', color: 'white' },
+  // items 
+  'potion': { x: 32, y: 13, char: '!', color: 'magenta' },
+  // traps 
+  'barrel': { x: 14, y: 13, char: '+', color: 'red' },
+  'barrelx': { x: 13, y: 13, char: 'x', color: 'red' },
+  /*
   'pc': { x: 4, y: 0, char: '@', color: 'white' },//{x: 35, y: 14},
   'npc': { x: 12, y: 1, char: 'N', color: 'teal' },
   'floor1': { x: 4, y: 4, char: ' ', color: 'gray' },
@@ -22,7 +60,7 @@ spriteLookup = {
   'heal': { x: 4, y: 8, char: 'H', color: 'white' },
   'explosion': { x: 3, y: 8, char: 'E', color: 'white' },
   'zap': { x: 2, y: 8, char: 'Z', color: 'white' },
-  /* walls */
+  // walls 
   'wall-topleft': { x: 0, y: 0, char: '#', color: 'gray' },
   'wall-top': { x: 1, y: 0, char: '#', color: 'gray' },
   'wall-topright': { x: 3, y: 0, char: '#', color: 'gray' },
@@ -32,13 +70,14 @@ spriteLookup = {
   'wall-bottomright': { x: 3, y: 2, char: '#', color: 'gray' },
   'wall-bottom': { x: 1, y: 0, char: '#', color: 'gray' },
   'exit': { x: 4, y: 2, char: '<', color: 'orange' },
-  /* weapons */
+  // weapons 
   'sword': { x: 6, y: 4, char: 'S', color: 'white' },
-  /* items */
+  // items 
   'potion': { x: 7, y: 8, char: '!', color: 'magenta' },
-  /* traps */
+  // traps 
   'barrel': { x: 9, y: 8, char: '+', color: 'red' },
   'barrelx': { x: 7, y: 1, char: 'x', color: 'red' },
+  */
 };
 
 const spriteMap = {
@@ -82,10 +121,10 @@ function drawSprite(sprite, x, y) {
   if (!asciiMode) {
     ctx.drawImage(
       spritesheet,
-      spriteLookup[sprite].x * 8,//sprite * 16,
-      spriteLookup[sprite].y * 8, //0,
-      8,
-      8,
+      spriteLookup[sprite].x * spriteSize,//sprite * 16,
+      spriteLookup[sprite].y * spriteSize, //0,
+      spriteSize,
+      spriteSize,
       x * tileSize + shakeX,
       y * tileSize + shakeY,
       tileSize,
@@ -100,10 +139,10 @@ function drawSpriteExact(sprite, x, y) {
   if (!asciiMode) {
     ctx.drawImage(
       spritesheet,
-      spriteLookup[sprite].x * 8,//sprite * 16,
-      spriteLookup[sprite].y * 8, //0,
-      8,
-      8,
+      spriteLookup[sprite].x * spriteSize,//sprite * 16,
+      spriteLookup[sprite].y * spriteSize, //0,
+      spriteSize,
+      spriteSize,
       x + shakeX,
       y + shakeY,
       tileSize,

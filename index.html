@@ -337,10 +337,11 @@ todo:
   shakeX = 0;
   shakeY = 0;
 
+  spriteSize = 16;
   spritesheet = new Image();
-  spritesheet.src = "kenney-microroguelike/Tilemap/colored_tilemap_packed.png"
+  // spritesheet.src = "kenney-microroguelike/Tilemap/colored_tilemap_packed.png"
+  spritesheet.src = 'colored_transparent_packed.png';
   spritesheet.onload = showTitle;
-  // spritesheet.src = 'colored_transparent_packed.png';
 
   gameState = STATES.loading;
 
