@@ -176,3 +176,18 @@ class Exit extends Tile {
     }
   }
 }
+
+class AsciiTrap extends Tile {
+  constructor(x, y) {
+    let _r = Math.random();
+    let _t = 'asciitile';
+    super(x, y, _t, true);
+  }
+
+  stepOn(monster) {
+    if (monster.isPlayer) {
+      playSound("spell");
+      asciiMode = !asciiMode;
+    }
+  }
+}

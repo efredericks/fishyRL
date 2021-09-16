@@ -51,6 +51,9 @@ function generateTiles() {
       }
     }
   }
+
+  randomPassableTile().replace(AsciiTrap);
+
   return passableTiles;
 }
 

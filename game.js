@@ -39,6 +39,7 @@ spriteLookup = {
   // traps 
   'barrel': { x: 14, y: 13, char: '+', color: 'red' },
   'barrelx': { x: 13, y: 13, char: 'x', color: 'red' },
+  'asciitile': { x: 38, y: 13, char: '?', color: 'yellow' },
   /*
   'pc': { x: 4, y: 0, char: '@', color: 'white' },//{x: 35, y: 14},
   'npc': { x: 12, y: 1, char: 'N', color: 'teal' },
