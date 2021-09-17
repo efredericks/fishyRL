@@ -313,7 +313,21 @@ function showTitle() {
 
   drawText('><~=fishyRL=>', 40, true, 60, "white");
   if (gameState == STATES.dead) {
-    drawText("You died again you ponce.", 24, true, 100, "white");
+    let _deathmessages = [
+      "You died ... again.",
+      "You died.",
+      "Thou has perished ... again.",
+      "Sigh.",
+      "How many times are we going to do this?",
+      "Death, but not for you gameslinger.",
+      "You see a bright light.",
+      "Why is there an ASCII mode anyway?",
+      "Sure you died, but you have another quarter!",
+      "Fancy another go?",
+      "Anybody else watching re-runs of Three's Company?",
+      "There literally are no fish in this game.",
+    ];
+    drawText(_deathmessages[randomRange(0,_deathmessages.length)], 24, true, 100, "white");
   } else {
     let msg = ["Go forth and find the infamous Ring of Crendor!", "It's sparkly majesty calls to the deep depths", "of your cold, dead heart,", "yearning to be pawned for a fiver"];
     drawText(msg[0], 24, true, 100, "white");
