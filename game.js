@@ -33,9 +33,20 @@ spriteLookup = {
   'wall-bottom': { x: 17, y: 15, char: '#', color: 'gray' },
   'exit': { x: 4, y: 2, char: '<', color: 'orange' },
   // weapons 
+  // bludgeon class
+  'skull': {x:34, y:12, char: 'S', color: 'white'},
+  // dagger class
+  'dagger': {x:32, y:6, char: 'D', color: 'white'},
+  // sword class
   'sword': { x: 33, y: 8, char: 'S', color: 'white' },
+  // gun class
+  'gun': { x: 38, y: 9, char: 'G', color: 'white' },
+
   // items 
   'potion': { x: 32, y: 13, char: '!', color: 'magenta' },
+  'scroll1': {x: 33, y: 15, char: '?', color: 'magenta' },
+  'scroll2': {x: 34, y: 15, char: '?', color: 'magenta' },
+
   // traps 
   'barrel': { x: 14, y: 13, char: '+', color: 'red' },
   'barrelx': { x: 13, y: 13, char: 'x', color: 'red' },
@@ -202,7 +213,8 @@ function draw() {
     ctx.rect(textX, 110, tileSize + 12, tileSize + 12);
     ctx.stroke();
     ctx.closePath();
-    drawSpriteExact('sword', textX + 6, 116);
+    drawSpriteExact('dagger', textX + 6, 116);
+    // drawSpriteExact('sword', textX + 6, 116);
 
     drawTextExact("Item", 18, false, canvas.width - 120, 100, "aqua");
     ctx.beginPath();
