@@ -195,7 +195,7 @@ class Player extends Monster {
     super(tile, 'pc', 100);//3);
     this.isPlayer = true;
     this.teleportCounter = 0;
-    this.spells = shuffle(Object.keys(spells)).splice(0, numSpells);
+    this.spells = shuffle(Object.keys(spells).filter(k => !k.includes("ENEMY"))).splice(0, numSpells);
     this.ring = ring;
     this.potion = 0;
   }
