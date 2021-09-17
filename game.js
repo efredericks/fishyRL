@@ -7,7 +7,7 @@ spriteLookup = {
   'floor1': { x: 0, y: 0, char: ' ', color: 'gray' },
   'grass': { x: 5, y: 0, char: '\'', color: 'rgba(0,255,0,0.6)' },
   'floor2': { x: 1, y: 0, char: '.', color: 'gray' },
-  'wall': { x: 1, y: 17, char: '#', color: 'gray' },//{x: 1, y: 17},
+  'wall': { x: 22, y: 3, char: '#', color: 'gray' },//{x: 1, y: 17},
   'dog': { x: 31, y: 7, char: 'd', color: 'red' },
   'rat': { x: 31, y: 8, char: 'r', color: 'red' },
   'snake': { x: 27, y: 8, char: 's', color: 'red' },
