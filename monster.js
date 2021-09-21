@@ -11,7 +11,7 @@ function drawHealthBar(x, y, w, h, perc, col) {
 
   // inner bar
   ctx.beginPath();
-    ctx.fillStyle = "rgba(0,255,0,0.8)";
+  ctx.fillStyle = "rgba(0,255,0,0.8)";
   if (col)
     ctx.fillStyle = col;
   ctx.fillRect(_x + 2, _y + 2, _w, 2);
@@ -219,6 +219,9 @@ class Player extends Monster {
     this.spells = shuffle(Object.keys(spells).filter(k => !k.includes("ENEMY"))).splice(0, numSpells);
     this.ring = ring;
     this.potion = 0;
+
+    if (currentExitPosition !== undefined)
+      this.exitPosition = currentExitPosition;
   }
 
   update() {

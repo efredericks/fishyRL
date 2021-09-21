@@ -111,7 +111,8 @@ class Floor extends Tile {
       addScore(100, true);
       // showTitle();
 
-      randomPassableTile().replace(Exit);
+      if (level > 1)
+        randomPassableTile().replace(Exit);
     }
   }
 }
@@ -141,18 +142,23 @@ class Wall extends Tile {
 
 class Exit extends Tile {
   constructor(x, y) {
-    player.exitPosition = { x: x, y: y };
+    currentExitPosition = { x: x, y: y };
+    // player.exitPosition = { x: x, y: y };
 
-    if (player.ring)
-      if (upLevel == 1)
-        super(x, y, 'exit', true);
+    if (typeof player === 'undefined') { // first level
+      super(x, y, 'stairsDown', true);
+    } else {
+      if (player.ring)
+        if (upLevel == 1)
+          super(x, y, 'exit', true);
+        else
+          super(x, y, 'stairsUp', true);
       else
-        super(x, y, 'stairsUp', true);
-    else
-      if (level == numLevels)
-        super(x, y, 'exit', true);
-      else
-        super(x, y, 'stairsDown', true);
+        if (level == numLevels)
+          super(x, y, 'exit', true);
+        else
+          super(x, y, 'stairsDown', true);
+    }
   }
 
   stepOn(monster) {
@@ -202,17 +208,20 @@ class ConfuseTrap extends Tile {
     // if (monster.isPlayer) {
     playSound("spell");
     // console.log(monster.tile.getAdjacentPassableNeighbors())
-    monster.tile.getAdjacentPassableNeighbors().forEach(function (t) {
-      if (t.passable && inBounds(t.x, t.y)) {
+    // monster.tile.getAdjacentPassableNeighbors().forEach(function (t) {
+    //   if (t.passable && inBounds(t.x, t.y)) {
 
-        if (monster.isPlayer)
-          monster.confuseTimer = 10;
-        // console.log(t.x,t.y);
-        // t.confuse = true;
-        // t.confuseTimer = 5;
-        // t.replace(ConfuseTrap);
-      }
-    });
+    if (monster.isPlayer)
+      monster.confuseTimer = 10;
+    this.replace(Floor);
+
+
+    // console.log(t.x,t.y);
+    // t.confuse = true;
+    // t.confuseTimer = 5;
+    // t.replace(ConfuseTrap);
+    // }
+    // });
     // }
   }
 }

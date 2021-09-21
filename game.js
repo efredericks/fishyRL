@@ -34,9 +34,9 @@ spriteLookup = {
   'exit': { x: 4, y: 2, char: '<', color: 'orange' },
   // weapons 
   // bludgeon class
-  'skull': {x:34, y:12, char: 'S', color: 'white'},
+  'skull': { x: 34, y: 12, char: 'S', color: 'white' },
   // dagger class
-  'dagger': {x:32, y:6, char: 'D', color: 'white'},
+  'dagger': { x: 32, y: 6, char: 'D', color: 'white' },
   // sword class
   'sword': { x: 33, y: 8, char: 'S', color: 'white' },
   // gun class
@@ -44,8 +44,8 @@ spriteLookup = {
 
   // items 
   'potion': { x: 32, y: 13, char: '!', color: 'magenta' },
-  'scroll1': {x: 33, y: 15, char: '?', color: 'magenta' },
-  'scroll2': {x: 34, y: 15, char: '?', color: 'magenta' },
+  'scroll1': { x: 33, y: 15, char: '?', color: 'magenta' },
+  'scroll2': { x: 34, y: 15, char: '?', color: 'magenta' },
 
   // traps 
   'barrel': { x: 14, y: 13, char: '+', color: 'red' },
@@ -340,7 +340,7 @@ function showTitle() {
       "Anybody else watching re-runs of Three's Company?",
       "There literally are no fish in this game.",
     ];
-    drawText(_deathmessages[randomRange(0,_deathmessages.length-1)], 24, true, 100, "white");
+    drawText(_deathmessages[randomRange(0, _deathmessages.length - 1)], 24, true, 100, "white");
   } else {
     let msg = ["Go forth and find the infamous Ring of Crendor!", "It's sparkly majesty calls to the deep depths", "of your cold, dead heart,", "yearning to be pawned for a fiver"];
     drawText(msg[0], 24, true, 100, "white");
@@ -381,7 +381,8 @@ function startLevel(playerHP, playerSpells) {
     player.spells = playerSpells;
 
   if (level < numLevels || (player.ring && upLevel < numLevels))
-    randomPassableTile().replace(Exit);
+    if (level > 1)
+      randomPassableTile().replace(Exit);
 }
 
 function drawText(text, size, centered, textY, color) {

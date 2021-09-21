@@ -1,10 +1,45 @@
+/* 18x18 array
+X	- x pattern
++	- cross pattern
+*	- aoe confuse
+?	- convert to ascii
+"	- aoe fire
+>	- stairs down
+*/
+
+let _dungeonPrefabs = {
+  'randoms': [
+    ["##################",
+      "#                #",
+      "# +            + #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#       XX       #",
+      "#       XX       #",
+      "#       >        #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "# +            + #",
+      "#                #",
+      "##################",
+    ],
+  ],
+};
+
 function generateLevel() {
+  monsters = [];
+
   tryTo('generate map', function () {
     return generateTiles() == randomPassableTile().getConnectedTiles().length;
   });
 
-  if (level === 1)
-    randomPassableTile().replace(ConfuseTrap);
+  // if (level === 1)
+  //   randomPassableTile().replace(ConfuseTrap);
 
   generateMonsters();
   generateNPCs();
@@ -25,6 +60,8 @@ function generateTiles() {
   tiles = [];
   let passableTiles = 0;
 
+  let _d = _dungeonPrefabs.randoms[0];
+
   for (let i = 0; i < numTiles; i++) {
     tiles[i] = [];
     for (let j = 0; j < numTiles; j++) {
@@ -33,9 +70,37 @@ function generateTiles() {
         if (!inBounds(i, j)) {
           tiles[i][j] = new Wall(i, j);
         } else {
-          tiles[i][j] = new Floor(i, j);
+          switch (_d[j][i]) { // backwards for visibility in defining the obj
+            case ">":
+              tiles[i][j] = new Exit(i, j);
+              break;
+            case "X":
+              tiles[i][j] = new Floor(i, j);
+              spawnBarrel(BarrelX, i, j);
+              break;
+            case "+":
+              tiles[i][j] = new Floor(i, j);
+              spawnBarrel(Barrel, i, j);
+              break;
+            case "*":
+              tiles[i][j] = new ConfuseTrap(i, j);
+              break;
+            case "?":
+            case "\"":
+              tiles[i][j] = new AsciiTrap(i, j);
+              break;
+            default:
+              tiles[i][j] = new Floor(i, j);
+          }
           passableTiles++;
         }
+
+        // if (!inBounds(i, j)) {
+        //   tiles[i][j] = new Wall(i, j);
+        // } else {
+        //   tiles[i][j] = new Floor(i, j);
+        //   passableTiles++;
+        // }
 
       } else if (level == 2) { // trap demo
         if (!inBounds(i, j)) {
@@ -83,19 +148,19 @@ function randomPassableTile() {
 }
 
 function generateMonsters() {
-  monsters = [];
   let numMonsters = level + 1;
   for (let i = 0; i < numMonsters; i++) {
     spawnMonster();
   }
 
   if (level == 1) {
-    spawnBarrel(Barrel);
+    ;
+    // spawnBarrel(Barrel);
   } else if (level == 2) { // cross trap
-    spawnBarrel(BarrelX,2,2);
-    spawnBarrel(BarrelX,numTiles-3,numTiles-3);
-    spawnBarrel(BarrelX,2,numTiles-3);
-    spawnBarrel(BarrelX,numTiles-3,2);
+    spawnBarrel(BarrelX, 2, 2);
+    spawnBarrel(BarrelX, numTiles - 3, numTiles - 3);
+    spawnBarrel(BarrelX, 2, numTiles - 3);
+    spawnBarrel(BarrelX, numTiles - 3, 2);
   } else {
     for (let i = 0; i < numMonsters; i++)
       spawnBarrel();
@@ -127,7 +192,7 @@ function spawnMonster() {
   monsters.push(monster);
 }
 
-function spawnBarrel(t, i,j) {
+function spawnBarrel(t, i, j) {
   let monsterType = shuffle([Barrel, BarrelX])[0];
   if (t !== undefined)
     monsterType = t;
@@ -135,5 +200,5 @@ function spawnBarrel(t, i,j) {
   if (i === undefined && j === undefined)
     monsters.push(new monsterType(randomPassableTile()));
   else
-    monsters.push(new monsterType(getTile(i,j)));
+    monsters.push(new monsterType(getTile(i, j)));
 }
