@@ -51,6 +51,7 @@ spriteLookup = {
   'barrel': { x: 14, y: 13, char: '+', color: 'red' },
   'barrelx': { x: 13, y: 13, char: 'x', color: 'red' },
   'asciitile': { x: 38, y: 13, char: '?', color: 'yellow' },
+  'confusetile': { x: 27, y: 11, char: '?', color: 'yellow' },
   /*
   'pc': { x: 4, y: 0, char: '@', color: 'white' },//{x: 35, y: 14},
   'npc': { x: 12, y: 1, char: 'N', color: 'teal' },
@@ -339,7 +340,7 @@ function showTitle() {
       "Anybody else watching re-runs of Three's Company?",
       "There literally are no fish in this game.",
     ];
-    drawText(_deathmessages[randomRange(0,_deathmessages.length)], 24, true, 100, "white");
+    drawText(_deathmessages[randomRange(0,_deathmessages.length-1)], 24, true, 100, "white");
   } else {
     let msg = ["Go forth and find the infamous Ring of Crendor!", "It's sparkly majesty calls to the deep depths", "of your cold, dead heart,", "yearning to be pawned for a fiver"];
     drawText(msg[0], 24, true, 100, "white");

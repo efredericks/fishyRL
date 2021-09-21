@@ -3,6 +3,9 @@ function generateLevel() {
     return generateTiles() == randomPassableTile().getConnectedTiles().length;
   });
 
+  if (level === 1)
+    randomPassableTile().replace(ConfuseTrap);
+
   generateMonsters();
   generateNPCs();
 

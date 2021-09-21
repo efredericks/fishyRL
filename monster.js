@@ -1,4 +1,4 @@
-function drawHealthBar(x, y, w, h, perc) {
+function drawHealthBar(x, y, w, h, perc, col) {
   let _x = x * tileSize;// + shakeX;
   let _y = y * tileSize + tileSize - 4;// + shakeY + tileSize - 4;
   let _w = (tileSize - 4) * perc;
@@ -11,7 +11,9 @@ function drawHealthBar(x, y, w, h, perc) {
 
   // inner bar
   ctx.beginPath();
-  ctx.fillStyle = "rgba(0,255,0,0.8)";
+    ctx.fillStyle = "rgba(0,255,0,0.8)";
+  if (col)
+    ctx.fillStyle = col;
   ctx.fillRect(_x + 2, _y + 2, _w, 2);
   ctx.closePath();
 }
@@ -61,8 +63,11 @@ class Monster {
       drawSprite('tp', this.getDisplayX(), this.getDisplayY());
     else {
       drawSprite(this.sprite, this.getDisplayX(), this.getDisplayY());
-      if (!this.dead && !this.isNPC)
+      if (!this.dead && !this.isNPC) {
         this.drawHP();
+        if (this.confuseTimer !== undefined && this.confuseTimer > 0)
+          this.drawEffect();
+      }
     }
 
     this.offsetX -= Math.sign(this.offsetX) * (1 / 8);
@@ -80,6 +85,22 @@ class Monster {
       percHealth
     );
   }
+
+  drawEffect() {
+    if (this.confuseTimer !== undefined) {
+      let percEffect = this.confuseTimer / 10;
+
+      let i = 0;
+      drawHealthBar(
+        this.getDisplayX() + (i % 3) * (5 / 16),
+        (this.getDisplayY() - Math.floor(i / 3) * (5 / 16)) - (1 / 8),
+        100, 24,
+        percEffect,
+        "rgba(255,0,0,0.8)"
+      );
+    }
+  }
+
 
   tryMove(dx, dy) {
     let newTile = this.tile.getNeighbor(dx, dy);
@@ -202,6 +223,9 @@ class Player extends Monster {
 
   update() {
     this.shield--;
+
+    if (this.confuseTimer !== undefined && this.confuseTimer > 0)
+      this.confuseTimer--;
   }
 
   addSpell() {
@@ -247,7 +271,7 @@ class Player extends Monster {
 /* Traps */
 class Barrel extends Monster {
   constructor(tile) {
-    super(tile, 'barrel', randomRange(5,15));
+    super(tile, 'barrel', randomRange(5, 15));
   }
 
   explode() {
@@ -258,7 +282,7 @@ class Barrel extends Monster {
     // tick();
   }
 
-  doStuff() { 
+  doStuff() {
     if (this.teleportCounter <= 0) {
       this.hp--;
       if (this.hp <= 0) this.explode();
@@ -271,7 +295,7 @@ class Barrel extends Monster {
 }
 class BarrelX extends Monster {
   constructor(tile) {
-    super(tile, 'barrelx', randomRange(5,15));
+    super(tile, 'barrelx', randomRange(5, 15));
   }
 
   explode() {
@@ -282,7 +306,7 @@ class BarrelX extends Monster {
     // tick();
   }
 
-  doStuff() { 
+  doStuff() {
     if (this.teleportCounter <= 0) {
       this.hp--;
       if (this.hp <= 0) this.explode();

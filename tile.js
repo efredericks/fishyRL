@@ -191,3 +191,28 @@ class AsciiTrap extends Tile {
     }
   }
 }
+
+class ConfuseTrap extends Tile {
+  constructor(x, y) {
+    let _t = 'confusetile';
+    super(x, y, _t, true);
+  }
+
+  stepOn(monster) {
+    // if (monster.isPlayer) {
+    playSound("spell");
+    // console.log(monster.tile.getAdjacentPassableNeighbors())
+    monster.tile.getAdjacentPassableNeighbors().forEach(function (t) {
+      if (t.passable && inBounds(t.x, t.y)) {
+
+        if (monster.isPlayer)
+          monster.confuseTimer = 10;
+        // console.log(t.x,t.y);
+        // t.confuse = true;
+        // t.confuseTimer = 5;
+        // t.replace(ConfuseTrap);
+      }
+    });
+    // }
+  }
+}

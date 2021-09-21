@@ -329,7 +329,7 @@ todo:
   upLevel = 6;
   numLevels = 6;
   maxHP = 6;
-  startingHP = 3; 
+  startingHP = 3;
   // startingHP = 100;
   asciiMode = false;
 
@@ -373,16 +373,42 @@ todo:
     else if (gameState == STATES.running) {
       // NUMPAD keys not handled here -- need to check the location as
       // they seem to have the same key/keyCode as the number row
-      if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
-      if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
-      if (MOVE_KEYS.left.indexOf(e.key) >= 0) player.tryMove(-1, 0);
-      if (MOVE_KEYS.right.indexOf(e.key) >= 0) player.tryMove(1, 0);
 
-      // diags
-      if (MOVE_KEYS.upright.indexOf(e.key) >= 0) player.tryMove(1, -1);
-      if (MOVE_KEYS.upleft.indexOf(e.key) >= 0) player.tryMove(-1, -1);
-      if (MOVE_KEYS.downleft.indexOf(e.key) >= 0) player.tryMove(-1, 1);
-      if (MOVE_KEYS.downright.indexOf(e.key) >= 0) player.tryMove(1, 1);
+      if (player.confuseTimer !== undefined && player.confuseTimer > 0) {
+        if ((MOVE_KEYS.up.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.down.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.left.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.right.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.upright.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.upleft.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.downleft.indexOf(e.key) >= 0) ||
+          (MOVE_KEYS.downright.indexOf(e.key) >= 0)) {
+          let _dirs = [
+            [0, -1],
+            [0, 1],
+            [1, 0],
+            [1, 1],
+            [1, -1],
+            [-1, -1],
+            [-1, 1],
+            [1, 1],
+            [0, 0]
+          ];
+          let _dir = shuffle(_dirs)[0];
+          player.tryMove(_dir[0], _dir[1]);
+        }
+      } else {
+        if (MOVE_KEYS.up.indexOf(e.key) >= 0) player.tryMove(0, -1);
+        if (MOVE_KEYS.down.indexOf(e.key) >= 0) player.tryMove(0, 1);
+        if (MOVE_KEYS.left.indexOf(e.key) >= 0) player.tryMove(-1, 0);
+        if (MOVE_KEYS.right.indexOf(e.key) >= 0) player.tryMove(1, 0);
+
+        // diags
+        if (MOVE_KEYS.upright.indexOf(e.key) >= 0) player.tryMove(1, -1);
+        if (MOVE_KEYS.upleft.indexOf(e.key) >= 0) player.tryMove(-1, -1);
+        if (MOVE_KEYS.downleft.indexOf(e.key) >= 0) player.tryMove(-1, 1);
+        if (MOVE_KEYS.downright.indexOf(e.key) >= 0) player.tryMove(1, 1);
+      }
 
       // console.log(e.key, e.keyCode, e.which, e.DOM_KEY_LOCATION_NUMPAD, e.location, e.type, e.which);
 
