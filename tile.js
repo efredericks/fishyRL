@@ -71,13 +71,19 @@ class Tile {
 }
 
 class Floor extends Tile {
-  constructor(x, y) {
+  constructor(x, y, spr) {
     let _r = Math.random();
-    let _t = 'floor1';
-    if (_r > 0.95)
-      _t = 'grass';
-    else if (_r > 0.45)
-      _t = 'floor2'
+    let _t;
+
+    if (typeof spr === 'undefined') {
+      _t = 'floor1';
+      if (_r > 0.95)
+        _t = 'grass';
+      else if (_r > 0.45)
+        _t = 'floor2'
+    } else {
+      _t = spr;
+    }
     super(x, y, _t, true);
   }
 
@@ -136,6 +142,13 @@ class Wall extends Tile {
       _t = 'wall-right';
     else if (y == numTiles - 1) // bottom
       _t = 'wall-bottom';
+    super(x, y, _t, false);
+  }
+}
+
+class InnerWall extends Tile {
+  constructor(x, y) {
+    let _t = 'wall';
     super(x, y, _t, false);
   }
 }

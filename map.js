@@ -4,7 +4,9 @@ X	- x pattern
 *	- aoe confuse
 ?	- convert to ascii
 "	- aoe fire
+' - grass
 >	- stairs down
+# - wall
 */
 
 let _dungeonPrefabs = {
@@ -77,16 +79,36 @@ let _dungeonPrefabs = {
       "#                #",
       "#                #",
       "#                #",
-      "#                #",
+      "#        >       #",
       "#+      **      +#",
       "#+      **      +#",
-      "#                #",
+      "#       >        #",
       "#                #",
       "#                #",
       "#                #",
       "#  *          *  #",
       "#                #",
       "#       ++       #",
+      "##################",
+    ],
+    [
+      "##################", // template
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "################'#",
+      "#''''''''''''''''#",
+      "#''''''''''''''''#",
+      "#'''''''''''''''>#",
       "##################",
     ],
   ],
@@ -121,8 +143,8 @@ function generateTiles() {
   tiles = [];
   let passableTiles = 0;
 
-  let _d = shuffle(_dungeonPrefabs.randoms)[0];
-  // let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length-1];
+  // let _d = shuffle(_dungeonPrefabs.randoms)[0];
+  let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length-1];
 
   for (let i = 0; i < numTiles; i++) {
     tiles[i] = [];
@@ -146,6 +168,13 @@ function generateTiles() {
               break;
             case "*":
               tiles[i][j] = new ConfuseTrap(i, j);
+              break;
+            case "#":
+              tiles[i][j] = new Wall(i, j);
+              passableTiles--; // need this otherwise the values don't match
+              break;
+            case "'":
+              tiles[i][j] = new Floor(i, j, 'grass');
               break;
             case "?":
             case "\"":
