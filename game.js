@@ -112,7 +112,20 @@ function setupCanvas() {
   canvas.style.width = canvas.width + "px";
   canvas.style.height = canvas.height + "px";
   ctx.imageSmoothingEnabled = false;
+
+  disableAudio = false;
 }
+
+// add listener to audio checkbox
+document.addEventListener("DOMContentLoaded", function (event) {
+  var _sel = document.querySelector('input[name=disableAudio]');
+  _sel.addEventListener("change", function (event) {
+    if (_sel.checked)
+      disableAudio = true;
+    else
+      disableAudio = false;
+  });
+});
 
 function initSounds() {
   sounds = {
@@ -126,8 +139,10 @@ function initSounds() {
 }
 
 function playSound(sound) {
-  sounds[sound].currentTime = 0;
-  sounds[sound].play();
+  if (!disableAudio) {
+    sounds[sound].currentTime = 0;
+    sounds[sound].play();
+  }
 }
 
 function drawSprite(sprite, x, y) {
