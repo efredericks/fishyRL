@@ -111,6 +111,26 @@ let _dungeonPrefabs = {
       "#'''''''''''''''>#",
       "##################",
     ],
+    [
+      "##################", // explodey room
+      "#''''''''''''''''#",
+      "#'X            +'#",
+      "#' X          + '#",
+      "#'  X        +  '#",
+      "#'   X      +   '#",
+      "#'    X    +    '#",
+      "#'     X>>+     '#",
+      "#'      X+      '#",
+      "#'      +X      '#",
+      "#'     +>>X     '#",
+      "#'    +    X    '#",
+      "#'   +      X   '#",
+      "#'  +        X  '#",
+      "#' +          X '#",
+      "#'+            X'#",
+      "#''''''''''''''''#",
+      "##################",
+    ],
   ],
 };
 
@@ -169,7 +189,7 @@ function generateTiles() {
             case "*":
               tiles[i][j] = new ConfuseTrap(i, j);
               break;
-            case "#":
+            case "#":casdf
               tiles[i][j] = new Wall(i, j);
               passableTiles--; // need this otherwise the values don't match
               break;
