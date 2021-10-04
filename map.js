@@ -131,6 +131,26 @@ let _dungeonPrefabs = {
       "#''''''''''''''''#",
       "##################",
     ],
+    [
+      "##################", 
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#      ====      #",
+      "#      =>>=      #",
+      "#      ====      #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "##################",
+    ],
   ],
 };
 
@@ -163,8 +183,8 @@ function generateTiles() {
   tiles = [];
   let passableTiles = 0;
 
-  let _d = shuffle(_dungeonPrefabs.randoms)[0];
-  // let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length-1];
+  // let _d = shuffle(_dungeonPrefabs.randoms)[0];
+  let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length-1];
 
   for (let i = 0; i < numTiles; i++) {
     tiles[i] = [];
@@ -178,6 +198,12 @@ function generateTiles() {
             case ">":
               tiles[i][j] = new Exit(i, j);
               break;
+            case "=":
+              tiles[i][j] = new ClosedDoor(i, j);
+              break;
+            case "-":
+              tiles[i][j] = new OpenDoor(i, j);
+              break;
             case "X":
               tiles[i][j] = new Floor(i, j);
               spawnBarrel(BarrelX, i, j);
@@ -189,7 +215,7 @@ function generateTiles() {
             case "*":
               tiles[i][j] = new ConfuseTrap(i, j);
               break;
-            case "#":casdf
+            case "#":
               tiles[i][j] = new Wall(i, j);
               passableTiles--; // need this otherwise the values don't match
               break;

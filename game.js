@@ -22,6 +22,8 @@ spriteLookup = {
   'heal': { x: 31, y: 12, char: 'H', color: 'white' },
   'explosion': { x: 37, y: 11, char: 'E', color: 'white' },
   'zap': { x: 30, y: 12, char: 'Z', color: 'white' },
+  'door-open': { x: 12, y: 11, char: '+', color: 'white' },
+  'door-closed': { x: 11, y: 11, char: '-', color: 'white' },
   // walls 
   'wall-topleft': { x: 16, y: 13, char: '#', color: 'gray' },
   'wall-top': { x: 17, y: 13, char: '#', color: 'gray' },

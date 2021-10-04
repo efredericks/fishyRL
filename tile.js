@@ -153,6 +153,24 @@ class InnerWall extends Tile {
   }
 }
 
+class OpenDoor extends Tile {
+  constructor(x, y) {
+    let _t = 'door-open';
+    super(x, y, _t, true);
+  }
+  stepOn(monster) {}
+}
+class ClosedDoor extends Tile {
+  constructor(x, y) {
+    let _t = 'door-closed';
+    super(x, y, _t, true);
+  }
+  stepOn(monster) {
+    // if (monster.isPlayer)
+      this.replace(OpenDoor);
+  }
+}
+
 class Exit extends Tile {
   constructor(x, y) {
     currentExitPosition = { x: x, y: y };
