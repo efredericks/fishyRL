@@ -33,7 +33,7 @@ spriteLookup = {
   'wall-bottomleft': { x: 16, y: 15, char: '#', color: 'gray' },
   'wall-bottomright': { x: 18, y: 15, char: '#', color: 'gray' },
   'wall-bottom': { x: 17, y: 15, char: '#', color: 'gray' },
-  'exit': { x: 4, y: 2, char: '<', color: 'orange' },
+  'exit': { x: 28, y: 21, char: '<', color: 'green' },
   // weapons 
   // bludgeon class
   'skull': { x: 34, y: 12, char: 'S', color: 'white' },
