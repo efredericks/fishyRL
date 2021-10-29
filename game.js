@@ -2,12 +2,12 @@ const TEXT_X_OFFSET = 10;
 const TEXT_Y_OFFSET = 24;
 
 spriteLookup = {
-  'pc': { x: 24, y: 7, char: '@', color: 'white' },//{x: 35, y: 14},
+  'pc': { x: 24, y: 7, char: '@', color: 'white' }, //{x: 35, y: 14},
   'npc': { x: 35, y: 14, char: 'N', color: 'teal' },
   'floor1': { x: 0, y: 0, char: ' ', color: 'gray' },
   'grass': { x: 5, y: 0, char: '\'', color: 'rgba(0,255,0,0.6)' },
   'floor2': { x: 1, y: 0, char: '.', color: 'gray' },
-  'wall': { x: 22, y: 3, char: '#', color: 'gray' },//{x: 1, y: 17},
+  'wall': { x: 22, y: 3, char: '#', color: 'gray' }, //{x: 1, y: 17},
   'dog': { x: 31, y: 7, char: 'd', color: 'red' },
   'rat': { x: 31, y: 8, char: 'r', color: 'red' },
   'snake': { x: 27, y: 8, char: 's', color: 'red' },
@@ -119,9 +119,9 @@ function setupCanvas() {
 }
 
 // add listener to audio checkbox
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function(event) {
   var _sel = document.querySelector('input[name=disableAudio]');
-  _sel.addEventListener("change", function (event) {
+  _sel.addEventListener("change", function(event) {
     if (_sel.checked)
       disableAudio = true;
     else
@@ -151,7 +151,7 @@ function drawSprite(sprite, x, y) {
   if (!asciiMode) {
     ctx.drawImage(
       spritesheet,
-      spriteLookup[sprite].x * spriteSize,//sprite * 16,
+      spriteLookup[sprite].x * spriteSize, //sprite * 16,
       spriteLookup[sprite].y * spriteSize, //0,
       spriteSize,
       spriteSize,
@@ -169,7 +169,7 @@ function drawSpriteExact(sprite, x, y) {
   if (!asciiMode) {
     ctx.drawImage(
       spritesheet,
-      spriteLookup[sprite].x * spriteSize,//sprite * 16,
+      spriteLookup[sprite].x * spriteSize, //sprite * 16,
       spriteLookup[sprite].y * spriteSize, //0,
       spriteSize,
       spriteSize,
@@ -269,10 +269,10 @@ function draw() {
       if (player.ring)
         showRingMessage();
       else
-        if (player.dialogueTitle)
-          showDialogue(player.dialogueTitle, player.dialogue);
-        else
-          showDialogue("TEST", "test");
+      if (player.dialogueTitle)
+        showDialogue(player.dialogueTitle, player.dialogue);
+      else
+        showDialogue("TEST", "test");
     }
   }
 }
@@ -320,6 +320,7 @@ function showWin() {
   drawText(msg[0], 24, true, 100, "white");
   drawText(msg[1], 24, true, 140, "white");
 }
+
 function showRingMessage() {
   ctx.fillStyle = 'rgba(0,0,0,0.75)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -328,6 +329,7 @@ function showRingMessage() {
   drawText(msg[0], 24, true, 100, "white");
   drawText(msg[1], 24, true, 140, "white");
 }
+
 function showDialogue(title, message) {
   ctx.fillStyle = 'rgba(0,0,0,0.75)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -373,7 +375,7 @@ function showTitle() {
 function startGame() {
   level = 1;
   score = 0;
-  numSpells = 9;//1;
+  numSpells = 9; //1;
   startLevel(startingHP);
   gameState = STATES.running;
 }
@@ -414,6 +416,7 @@ function drawText(text, size, centered, textY, color) {
 
   ctx.fillText(text, textX, textY);
 }
+
 function drawTextExact(text, size, centered, textX, textY, color) {
   ctx.fillStyle = color;
   ctx.font = size + "px monospace";
@@ -458,7 +461,7 @@ function drawScores() {
     );
 
     let newestScore = scores.pop();
-    scores.sort(function (a, b) {
+    scores.sort(function(a, b) {
       return b.totalScore - a.totalScore;
     });
     scores.unshift(newestScore);
