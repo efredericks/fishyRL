@@ -1,6 +1,6 @@
 function drawHealthBar(x, y, w, h, perc, col) {
-  let _x = x * tileSize;// + shakeX;
-  let _y = y * tileSize + tileSize - 4;// + shakeY + tileSize - 4;
+  let _x = x * tileSize; // + shakeX;
+  let _y = y * tileSize + tileSize - 4; // + shakeY + tileSize - 4;
   let _w = (tileSize - 4) * perc;
 
   // outer bar
@@ -213,7 +213,7 @@ class NPC extends Monster {
 
 class Player extends Monster {
   constructor(tile, ring) {
-    super(tile, 'pc', 100);//3);
+    super(tile, 'pc', 100); //3);
     this.isPlayer = true;
     this.teleportCounter = 0;
     this.spells = shuffle(Object.keys(spells).filter(k => !k.includes("ENEMY"))).splice(0, numSpells);
@@ -291,7 +291,7 @@ class Barrel extends Monster {
       if (this.hp <= 0) this.explode();
     }
   }
-  tryMove() { ; }
+  tryMove() {; }
   hit() {
     this.hp = 1;
   }
@@ -315,7 +315,7 @@ class BarrelX extends Monster {
       if (this.hp <= 0) this.explode();
     }
   }
-  tryMove() { ; }
+  tryMove() {; }
   hit() {
     this.hp = 1;
   }

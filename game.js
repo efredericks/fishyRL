@@ -376,14 +376,8 @@ function startGame() {
   level = 1;
   score = 0;
   numSpells = 9; //1;
-  startLevel(startingHP);
-  gameState = STATES.running;
-}
 
-function startLevel(playerHP, playerSpells) {
-  spawnRate = 15;
-  spawnCounter = spawnRate;
-  generateLevel();
+  startLevel(startingHP);
 
   let ring = false;
   let numPotions = 0;
@@ -391,10 +385,23 @@ function startLevel(playerHP, playerSpells) {
     ring = player.ring;
     numPotions = player.potion;
   }
+
   player = new Player(randomPassableTile(), ring);
-  player.hp = playerHP;
+  player.hp = startingHP;
   player.maxHP = player.hp;
   player.potion = numPotions;
+
+  gameState = STATES.running;
+
+}
+
+function startLevel(playerHP, playerSpells) {
+  spawnRate = 15;
+  spawnCounter = spawnRate;
+  generateLevel();
+
+
+  // player.setPosition(randomPassableTile());
 
   if (playerSpells)
     player.spells = playerSpells;
