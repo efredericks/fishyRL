@@ -132,7 +132,7 @@ let _dungeonPrefabs = {
       "##################",
     ],
     [
-      "##################", 
+      "##################",
       "#                #",
       "#                #",
       "#                #",
@@ -188,7 +188,7 @@ function generateTiles() {
   let passableTiles = 0;
 
   // let _d = shuffle(_dungeonPrefabs.randoms)[0];
-  let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length-1];
+  let _d = _dungeonPrefabs.randoms[_dungeonPrefabs.randoms.length - 1];
 
   for (let i = 0; i < numTiles; i++) {
     tiles[i] = [];
@@ -316,15 +316,37 @@ const NPCChatter = {
     "Oh heavens no, not cursed.  Just something to avoid I've heard.",
     "I've not gone to see it, no.  Too many sneks and crabs. I'm allergic, you see.",
   ],
+  'random': [
+    "Hey, have you seen that new weapon? It's so shiny!",
+    "I heard there's a hidden treasure on at the bottom. Anyone brave enough to find it?",
+    "Did you hear about the goblin invasion? They're causing chaos in the dungeon!",
+    "I can't believe I've been stuck in this dungeon for days. I miss the sunlight.",
+    "Be careful! I've heard there are deadly traps waiting for unsuspecting adventurers.",
+    "I found a healing potion earlier. Too bad I didn't need it.",
+    "I lost my lucky charm somewhere in this dungeon. If you find it, I'll give you a reward!",
+    "You look strong! Maybe you'll be the one to finally break out of here.",
+    "I heard a rumor that the walls in this dungeon can talk. Creepy, right?",
+    "I found an enchanted sword yesterday. It made me feel invincible!",
+    "I'm tired of fighting monsters. I just want to find the exit and go home.",
+  ],
+}
+
+function getRandomChatter() {
+  let ret = [];
+  for (let _ = 0; _ < 5; _++) {
+    ret.push(shuffle(NPCChatter.random)[0]);
+  }
+  return ret;
 }
 
 function generateNPCs() {
   npc_names = ["Yaz", "Lord Dag", "Wobb", "Anne who was a Ghost", "Big J", "The Murph"];
   npcs = [];
-  if (level == 1)
-    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut));//["Look to my dungeon and despair!", "I'm so bored"]));
-  if (level == 2)
-    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut));//["Look to my dungeon and despair!", "I'm so bored"]));
+  if (level == 1) {
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], NPCChatter.tut, dialogueRandom=false));//["Look to my dungeon and despair!", "I'm so bored"]));
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], getRandomChatter()));//["Look to my dungeon and despair!", "I'm so bored"]));
+  } if (level == 2)
+    npcs.push(new NPC(randomPassableTile(), shuffle(npc_names)[0], getRandomChatter()));//["Look to my dungeon and despair!", "I'm so bored"]));
 }
 
 function spawnMonster() {

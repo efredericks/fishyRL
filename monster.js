@@ -181,13 +181,14 @@ class Monster {
 }
 
 class NPC extends Monster {
-  constructor(tile, name, dialogue) {
+  constructor(tile, name, dialogue, dialogueRandom = true) {
     super(tile, 'npc', -1);
     this.isNPC = true;
     this.teleportCounter = 0;
     this.name = name;
     this.dialogue = dialogue;
     this.dialogueIndex = 0;
+    this.dialogueRandom = dialogueRandom;
   }
 
   doStuff() {
@@ -199,15 +200,22 @@ class NPC extends Monster {
 
   chat() {
     player.dialogueTitle = this.name;
+
+    // grab a random index
+    if (this.dialogueRandom) this.dialogueIndex = randomRange(0, this.dialogue.length - 1);
+
     if (!asciiMode)
       player.dialogue = this.dialogue[this.dialogueIndex];
     else
       player.dialogue = "WHAT HAVE YOU DONE!?!?!?!";
     showDialogue(player.dialogueTitle, player.dialogue);
 
-    this.dialogueIndex++;
-    if (this.dialogueIndex >= this.dialogue.length)
-      this.dialogueIndex = 0;
+    // if this is an ordered conversation...
+    if (!this.dialogueRandom) {
+      this.dialogueIndex++;
+      if (this.dialogueIndex >= this.dialogue.length)
+        this.dialogueIndex = 0;
+    }
   }
 }
 
